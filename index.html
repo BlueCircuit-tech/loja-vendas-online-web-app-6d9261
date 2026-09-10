@@ -2789,6 +2789,249 @@ if (document.querySelector('[data-tela="solicitacao-corrida"]')) {
       </script>
     </section>
 
+    <section data-tela="notificacoes" class="hidden">
+    <script>
+        const notificacoes_dados = [
+            { id: 1, tipo: 'corrida', icone: 'car', titulo: 'Corrida confirmada', descricao: 'Seu motorista João Silva está a caminho. Toyota Corolla Preto — placa ABC-1234.', tempo: 'agora mesmo', lida: false, detalhe: 'Previsão de chegada: 4 minutos. Distância: 0.8 km. Tarifa estimada: R$ 18,50.' },
+            { id: 2, tipo: 'corrida', icone: 'car', titulo: 'Motorista chegou', descricao: 'João Silva chegou ao ponto de embarque. Rua das Flores, 245.', tempo: '2 min', lida: false, detalhe: 'Veículo: Toyota Corolla Preto. Passageiros anteriores: nenhum. Avaliação do motorista: 4.8 ⭐.' },
+            { id: 3, tipo: 'assinatura', icone: 'crown', titulo: 'Plano Ativo — BluePremium', descricao: 'Seu plano mensal está ativo até 18/07/2025. Aproveite corridas com 15% de desconto.', tempo: '1 h', lida: false, detalhe: 'Plano BluePremium — R$ 29,90/mês. Benefícios: 15% off em todas as corridas, prioridade em horários de pico, suporte prioritário.' },
+            { id: 4, tipo: 'promocao', icone: 'tag', titulo: 'Promoção: Viagens no centro', descricao: '20% de desconto em corridas para o Centro de SP até domingo!', tempo: '3 h', lida: false, detalhe: 'Cupom: CENTRO20. Válido de 22/06 a 29/06. Aplicável em corridas com origem OU destino na região central de São Paulo.' },
+            { id: 5, tipo: 'promocao', icone: 'tag', titulo: 'Indique e ganhe', descricao: 'Convide um amigo e ambos ganham R$ 10 de crédito.', tempo: '5 h', lida: true, detalhe: 'Seu código: BLUE2025MARIA. Cada indicação confirmada rende R$ 10 para você e R$ 10 para o indicado. Sem limite de indicações.' },
+            { id: 6, tipo: 'app', icone: 'phone', titulo: 'Atualização disponível', descricao: 'Nova versão 3.2.1 disponível com melhorias de desempenho e novo design.', tempo: '1 dia', lida: true, detalhe: 'Novidades: botão de pânico redesign, rastreamento em tempo real otimizado, suporte a Apple Wallet para passagens de transporte público.' },
+            { id: 7, tipo: 'corrida', icone: 'star', titulo: 'Avalie sua última corrida', descricao: 'Como foi a viagem com Carlos Mendes? Sua opinião ajuda a melhorar.', tempo: '1 dia', lida: true, detalhe: 'Corrida: Av. Paulista, 1000 → Rua Augusta, 520. Valor: R$ 24,30. Duração: 22 min. Avalie com 1 a 5 estrelas.' },
+            { id: 8, tipo: 'assinatura', icone: 'receipt', titulo: 'Recibo da corrida #10847', descricao: 'Recibo da viagem de ontem disponível para download.', tempo: '2 dias', lida: true, detalhe: 'Data: 21/06/2025. Origem: Morumbi Shopping. Destino: Aeroporto de Congonhas. Valor: R$ 45,80. Forma de pagamento: cartão Mastercard **** 4521.' },
+            { id: 9, tipo: 'promocao', icone: 'gift', titulo: 'Black Friday antecipada!', descricao: 'Até 30% off em planos anuais. Oferta válida só essa semana.', tempo: '2 dias', lida: true, detalhe: 'Plano Anual BluePremium: de R$ 359,90 por R$ 249,90. Economia de R$ 110,00. Aplicação automática no checkout.' },
+            { id: 10, tipo: 'app', icone: 'shield', titulo: 'Segurança: verificação em duas etapas', descricao: 'Ative a verificação em duas etapas para maior segurança da sua conta.', tempo: '3 dias', lida: true, detalhe: 'Proteja sua conta com autenticação por SMS ou app autenticador. Recomendado para contas com método de pagamento cadastrado.' }
+        ];
+
+        function notificacoes_render(filtro) {
+            filtro = filtro || 'todos';
+            const busca = (document.getElementById('notif-busca')?.value || '').toLowerCase();
+            const container = document.getElementById('notif-lista');
+            const vazio = document.getElementById('notif-vazio');
+            if (!container) return;
+            let itens = notificacoes_dados;
+            if (filtro !== 'todos') itens = itens.filter(n => n.tipo === filtro);
+            if (busca) itens = itens.filter(n => n.titulo.toLowerCase().includes(busca) || n.descricao.toLowerCase().includes(busca));
+            if (itens.length === 0) { container.classList.add('hidden'); vazio.classList.remove('hidden'); return; }
+            container.classList.remove('hidden'); vazio.classList.add('hidden');
+            const tipoInfo = { corrida: { label: 'Corrida', cor: 'bg-blue-100 text-blue-700', icone: 'car' }, assinatura: { label: 'Assinatura', cor: 'bg-amber-100 text-amber-700', icone: 'crown' }, promocao: { label: 'Promoção', cor: 'bg-emerald-100 text-emerald-700', icone: 'tag' }, app: { label: 'App', cor: 'bg-slate-100 text-slate-700', icone: 'phone' } };
+            container.innerHTML = itens.map(n => {
+                const ti = tipoInfo[n.tipo] || tipoInfo.app;
+                return `<div onclick="notificacoes_detalhe(${n.id})" class="card p-4 mb-3 cursor-pointer active:scale-[0.98] transition-all duration-200 hover:shadow-md ${n.lida ? 'opacity-70' : ''}">
+                    <div class="flex gap-3">
+                        <div class="w-10 h-10 rounded-full bg-marca-100 text-marca-700 flex items-center justify-center flex-shrink-0">${svgIcone(ti.icone, 20)}</div>
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-start justify-between gap-2">
+                                <div class="flex-1 min-w-0">
+                                    <div class="flex items-center gap-2 flex-wrap">
+                                        <h4 class="font-display font-semibold text-sm text-slate-800 ${n.lida ? '' : 'font-bold'}">${n.titulo}</h4>
+                                        ${n.lida ? '' : '<span class="w-2 h-2 rounded-full bg-marca-500 flex-shrink-0"></span>'}
+                                    </div>
+                                    <span class="inline-block mt-1 text-[10px] font-semibold px-2 py-0.5 rounded-full ${ti.cor}">${ti.label}</span>
+                                </div>
+                                <span class="text-[11px] text-slate-400 whitespace-nowrap flex-shrink-0">${n.tempo}</span>
+                            </div>
+                            <p class="text-xs text-slate-500 mt-1.5 leading-relaxed line-clamp-2">${n.descricao}</p>
+                        </div>
+                    </div>
+                </div>`;
+            }).join('');
+        }
+
+        function notificacoes_detalhe(id) {
+            const n = notificacoes_dados.find(x => x.id === id);
+            if (!n) return;
+            n.lida = true;
+            notificacoes_atualizarBadge();
+            notificacoes_render(document.querySelector('[data-filtro-ativo="true"]')?.dataset?.filtro || 'todos');
+            abrirModal(`
+                <div class="p-1">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-12 h-12 rounded-full bg-marca-100 text-marca-700 flex items-center justify-center">${svgIcone(n.tipo === 'corrida' ? 'car' : n.tipo === 'assinatura' ? 'crown' : n.tipo === 'promocao' ? 'tag' : 'phone', 24)}</div>
+                        <div>
+                            <h3 class="font-display font-bold text-base text-slate-800">${n.titulo}</h3>
+                            <span class="text-xs text-slate-400">${n.tempo}</span>
+                        </div>
+                    </div>
+                    <p class="text-sm text-slate-600 leading-relaxed mb-4">${n.descricao}</p>
+                    <div class="bg-slate-50 rounded-xl p-4 mb-4">
+                        <p class="text-sm text-slate-700">${n.detalhe}</p>
+                    </div>
+                    <div class="flex gap-2">
+                        ${n.tipo === 'promocao' ? '<button onclick="fecharModal(); toast(\'Cupom copiado!\', \'ok\')" class="flex-1 btn bg-marca-500 text-white font-semibold text-sm py-3 rounded-xl active:scale-95 transition-all">Copiar cupom</button>' : ''}
+                        ${n.tipo === 'corrida' ? '<button onclick="fecharModal(); mostrarTela(\'acompanhar-corrida\')" class="flex-1 btn bg-marca-500 text-white font-semibold text-sm py-3 rounded-xl active:scale-95 transition-all">Acompanhar</button>' : ''}
+                        <button onclick="fecharModal()" class="btn px-6 border border-slate-200 text-slate-600 font-medium text-sm py-3 rounded-xl active:scale-95 transition-all">Fechar</button>
+                    </div>
+                </div>`, n.titulo);
+        }
+
+        function notificacoes_atualizarBadge() {
+            const nLidas = notificacoes_dados.filter(n => !n.lida).length;
+            const badge = document.getElementById('badge-notificacoes');
+            if (badge) { badge.textContent = nLidas; badge.classList.toggle('hidden', nLidas === 0); }
+        }
+
+        function notificacoes_marcarTodasLidas() {
+            let mudou = false;
+            notificacoes_dados.forEach(n => { if (!n.lida) { n.lida = true; mudou = true; } });
+            if (mudou) { notificacoes_atualizarBadge(); notificacoes_render(document.querySelector('[data-filtro-ativo="true"]')?.dataset?.filtro || 'todos'); toast('Todas as notificações foram marcadas como lidas', 'ok'); }
+        }
+
+        function notificacoes_abrirConfig() {
+            const html = `
+                <div class="p-1 space-y-5">
+                    <div>
+                        <h4 class="font-display font-semibold text-sm text-slate-700 mb-3">Canais de notificação</h4>
+                        <div class="space-y-3">
+                            <label class="flex items-center gap-3 p-3 rounded-xl border border-slate-200 cursor-pointer hover:bg-slate-50 transition-colors">
+                                <input type="checkbox" checked class="w-5 h-5 rounded border-slate-300 text-marca-500 focus:ring-marca-500">
+                                <div class="flex-1">
+                                    <span class="text-sm font-medium text-slate-700">Push no app</span>
+                                    <p class="text-xs text-slate-400">Notificações nativas no dispositivo</p>
+                                </div>
+                                ${svgIcone('phone', 18, 'text-marca-500')}
+                            </label>
+                            <label class="flex items-center gap-3 p-3 rounded-xl border border-slate-200 cursor-pointer hover:bg-slate-50 transition-colors">
+                                <input type="checkbox" checked class="w-5 h-5 rounded border-slate-300 text-green-500 focus:ring-green-500">
+                                <div class="flex-1">
+                                    <span class="text-sm font-medium text-slate-700">WhatsApp</span>
+                                    <p class="text-xs text-slate-400">Mensagens no número cadastrado</p>
+                                </div>
+                                <svg class="w-[18px] h-[18px] text-green-500" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                            </label>
+                            <label class="flex items-center gap-3 p-3 rounded-xl border border-slate-200 cursor-pointer hover:bg-slate-50 transition-colors">
+                                <input type="checkbox" class="w-5 h-5 rounded border-slate-300 text-marca-500 focus:ring-marca-500">
+                                <div class="flex-1">
+                                    <span class="text-sm font-medium text-slate-700">E-mail</span>
+                                    <p class="text-xs text-slate-400">Resumos semanais e ofertas</p>
+                                </div>
+                                ${svgIcone('mail', 18, 'text-slate-400')}
+                            </label>
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="font-display font-semibold text-sm text-slate-700 mb-3">Tipos de notificação</h4>
+                        <div class="space-y-2">
+                            ${[['corrida', 'Confirmações de corrida'], ['assinatura', 'Lembretes de assinatura'], ['promocao', 'Promoções e ofertas'], ['app', 'Atualizações do app']].map(([k, l]) => `
+                                <label class="flex items-center justify-between p-3 rounded-xl border border-slate-200 cursor-pointer hover:bg-slate-50 transition-colors">
+                                    <span class="text-sm text-slate-600">${l}</span>
+                                    <input type="checkbox" checked class="w-5 h-5 rounded border-slate-300 text-marca-500 focus:ring-marca-500">
+                                </label>`).join('')}
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="font-display font-semibold text-sm text-slate-700 mb-3">Horário silencioso</h4>
+                        <div class="flex gap-3">
+                            <div class="flex-1">
+                                <label class="text-xs text-slate-400 mb-1 block">De</label>
+                                <input type="time" value="22:00" class="w-full border border-slate-200 rounded-xl px-3 py-2.5 text-sm text-slate-700 focus:ring-2 focus:ring-marca-500 focus:border-transparent outline-none">
+                            </div>
+                            <div class="flex-1">
+                                <label class="text-xs text-slate-400 mb-1 block">Até</label>
+                                <input type="time" value="07:00" class="w-full border border-slate-200 rounded-xl px-3 py-2.5 text-sm text-slate-700 focus:ring-2 focus:ring-marca-500 focus:border-transparent outline-none">
+                            </div>
+                        </div>
+                    </div>
+                    <button onclick="fecharModal(); toast('Configurações salvas!', 'ok')" class="w-full btn bg-marca-500 text-white font-semibold text-sm py-3.5 rounded-xl active:scale-95 transition-all">Salvar preferências</button>
+                </div>`;
+            abrirModal(html, 'Configurações de notificação');
+        }
+
+        function notificacoes_abrirSuporte() {
+            const html = `
+                <div class="p-1 space-y-4">
+                    <div class="flex items-center gap-3 p-4 bg-green-50 rounded-xl">
+                        <div class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0">
+                            <svg class="w-5 h-5 text-green-600" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                        </div>
+                        <div>
+                            <h3 class="font-display font-bold text-sm text-slate-800">Suporte via WhatsApp</h3>
+                            <p class="text-xs text-slate-500">Respondemos em até 5 minutos</p>
+                        </div>
+                    </div>
+                    <div class="space-y-2">
+                        <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider px-1">Assuntos frequentes</p>
+                        ${[['Problema com corrida', 'Problema com uma corrida recente'], ['Cobrança indevida', 'Valor ou taxa que parece errada'], ['Conta e dados', 'Alterar dados cadastrais'], ['Outro assunto', 'Falar com atendente']].map(([t, d]) => `
+                            <button onclick="fecharModal(); toast('Abrindo chat: ${t}...', 'info')" class="w-full text-left p-3 rounded-xl border border-slate-200 hover:bg-slate-50 active:scale-[0.98] transition-all flex items-center justify-between">
+                                <div><p class="text-sm font-medium text-slate-700">${t}</p><p class="text-xs text-slate-400">${d}</p></div>
+                                <svg class="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" view-width="24" view-height="24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                            </button>`).join('')}
+                    </div>
+                    <button onclick="fecharModal(); toast('Redirecionando para WhatsApp...', 'info')" class="w-full btn bg-green-500 text-white font-semibold text-sm py-3.5 rounded-xl active:scale-95 transition-all flex items-center justify-center gap-2">${svgIcone('whatsapp', 18, 'text-white')} Abrir chat no WhatsApp</button>
+                </div>`;
+            abrirModal(html, 'Suporte ao cliente');
+        }
+
+        function notificacoes_init() {
+            const filtros = document.querySelectorAll('[data-filtro]');
+            filtros.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    filtros.forEach(b => { b.dataset.filtroAtivo = 'false'; b.classList.remove('bg-marca-500', 'text-white'); b.classList.add('bg-slate-100', 'text-slate-500'); });
+                    this.dataset.filtroAtivo = 'true'; this.classList.remove('bg-slate-100', 'text-slate-500'); this.classList.add('bg-marca-500', 'text-white');
+                    notificacoes_render(this.dataset.filtro);
+                });
+            });
+            document.getElementById('notif-busca')?.addEventListener('input', () => {
+                const ativo = document.querySelector('[data-filtro-ativo="true"]');
+                notificacoes_render(ativo?.dataset?.filtro || 'todos');
+            });
+            notificacoes_atualizarBadge();
+            notificacoes_render();
+        }
+        document.addEventListener('DOMContentLoaded', notificacoes_init);
+    </script>
+
+    <div class="flex-1 overflow-y-auto pb-4">
+        <div class="bg-marca-500 text-white px-5 pt-5 pb-6">
+            <div class="flex items-center justify-between mb-1">
+                <div>
+                    <h1 class="font-display text-xl font-bold">Notificações</h1>
+                    <p class="text-marca-200 text-xs mt-0.5">3 não lidas</p>
+                </div>
+                <button onclick="notificacoes_abrirConfig()" class="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center active:scale-90 transition-all" title="Configurações">${svgIcone('config', 18, 'text-white')}</button>
+            </div>
+        </div>
+
+        <div class="px-4 pt-4">
+            <div class="flex items-center justify-between mb-3">
+                <div class="relative flex-1 mr-3">
+                    <svg class="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" view-width="24" view-height="24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                    <input id="notif-busca" type="text" placeholder="Buscar notificações..." class="w-full pl-9 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 placeholder:text-slate-400 focus:ring-2 focus:ring-marca-500 focus:border-transparent outline-none transition-all">
+                </div>
+                <button onclick="notificacoes_marcarTodasLidas()" class="text-xs font-semibold text-marca-500 whitespace-nowrap px-3 py-2.5 rounded-xl border border-marca-200 bg-marca-50 active:scale-95 transition-all">Ler todas</button>
+            </div>
+
+            <div class="flex gap-2 mb-4 overflow-x-auto pb-1 -mx-1 px-1 no-scrollbar">
+                <button data-filtro="todos" data-filtro-ativo="true" class="shrink-0 px-4 py-2 rounded-xl text-xs font-semibold transition-all bg-marca-500 text-white">Todas</button>
+                <button data-filtro="corrida" class="shrink-0 px-4 py-2 rounded-xl text-xs font-semibold transition-all bg-slate-100 text-slate-500">Corridas</button>
+                <button data-filtro="assinatura" class="shrink-0 px-4 py-2 rounded-xl text-xs font-semibold transition-all bg-slate-100 text-slate-500">Assinatura</button>
+                <button data-filtro="promocao" class="shrink-0 px-4 py-2 rounded-xl text-xs font-semibold transition-all bg-slate-100 text-slate-500">Promoções</button>
+                <button data-filtro="app" class="shrink-0 px-4 py-2 rounded-xl text-xs font-semibold transition-all bg-slate-100 text-slate-500">App</button>
+            </div>
+
+            <div id="notif-lista" class="animate-fadeIn"></div>
+            <div id="notif-vazio" class="hidden text-center py-12">
+                <div class="w-16 h-16 rounded-full bg-slate-100 flex items-center justify-center mx-auto mb-3">${svgIcone('bell', 24, 'text-slate-300')}</div>
+                <p class="text-sm text-slate-400 font-medium">Nenhuma notificação encontrada</p>
+                <p class="text-xs text-slate-300 mt-1">Tente ajustar os filtros ou a busca</p>
+            </div>
+
+            <div class="mt-6 mb-4">
+                <p class="text-[10px] font-bold text-slate-300 uppercase tracking-widest mb-3 px-1">Acesso rápido</p>
+                <button onclick="notificacoes_abrirSuporte()" class="w-full card p-4 flex items-center gap-3 cursor-pointer active:scale-[0.98] transition-all hover:shadow-md">
+                    <div class="w-10 h-10 rounded-full bg-green-100 text-green-600 flex items-center justify-center flex-shrink-0">${svgIcone('chat', 20)}</div>
+                    <div class="flex-1 text-left">
+                        <p class="text-sm font-semibold text-slate-700">Falar com suporte</p>
+                        <p class="text-xs text-slate-400">Chat direto ou WhatsApp</p>
+                    </div>
+                    ${svgIcone('arrow', 16, 'text-slate-300')}
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+
     <!-- TELAS -->
 
     </main>
