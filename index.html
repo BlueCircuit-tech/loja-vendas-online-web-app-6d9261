@@ -749,6 +749,270 @@
       </script>
     </section>
 
+    <section data-tela="tarifa-e-rota" class="hidden">
+    <div class="px-4 pt-4 pb-2">
+        <div class="flex items-center gap-3 mb-1">
+            <button onclick="tarifa_e_rota_voltar()" class="w-9 h-9 rounded-full bg-marca-800/40 flex items-center justify-center active:scale-90 transition-transform flex-shrink-0">
+                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7"/></svg>
+            </button>
+            <div>
+                <h2 class="font-display text-lg font-bold text-white leading-tight">Tarifa e Rota</h2>
+                <p class="text-xs text-marca-300 leading-tight">Corrida • Vila Mariana</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="px-4 pb-6 space-y-4 overflow-y-auto" style="height: calc(100% - 64px);">
+        <div class="relative w-full h-44 rounded-2xl overflow-hidden bg-marca-800/50 border border-marca-600/30">
+            <div class="absolute inset-0" id="rota-mapa">
+                <svg class="w-full h-full" viewBox="0 0 340 176" preserveAspectRatio="xMidYMid slice">
+                    <defs>
+                        <linearGradient id="roadGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" style="stop-color:#2563EB;stop-opacity:0.9"/>
+                            <stop offset="50%" style="stop-color:#2563EB;stop-opacity:1"/>
+                            <stop offset="100%" style="stop-color:#2563EB;stop-opacity:0.8"/>
+                        </linearGradient>
+                        <filter id="glow"><feGaussianBlur stdDeviation="3" result="g"/><feMerge><feMergeNode in="g"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+                        <pattern id="grid" width="30" height="30" patternUnits="userSpaceOnUse">
+                            <path d="M 30 0 L 0 0 0 30" fill="none" stroke="#1E3A5F" stroke-width="0.5" opacity="0.4"/>
+                        </pattern>
+                    </defs>
+                    <rect width="340" height="176" fill="#1a2e47"/>
+                    <rect width="340" height="176" fill="url(#grid)"/>
+                    <path d="M 60 148 Q 80 130 100 128 Q 130 125 145 105 Q 160 85 180 75 Q 200 65 225 58 Q 250 52 270 40 Q 285 32 300 28" fill="none" stroke="url(#roadGrad)" stroke-width="4" stroke-linecap="round" stroke-dasharray="8 4" filter="url(#glow)"/>
+                    <circle cx="60" cy="148" r="10" fill="#10B981" stroke="#fff" stroke-width="2.5" filter="url(#glow)"/>
+                    <circle cx="300" cy="28" r="10" fill="#EF4444" stroke="#fff" stroke-width="2.5" filter="url(#glow)"/>
+                    <text x="60" y="165" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="8" font-family="sans-serif">Origem</text>
+                    <text x="300" y="18" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="8" font-family="sans-serif">Destino</text>
+                    <rect x="115" y="98" width="16" height="22" rx="3" fill="#F59E0B" stroke="#fff" stroke-width="1" opacity="0.9">
+                        <animate attributeName="opacity" values="0.9;1;0.9" dur="2s" repeatCount="indefinite"/>
+                    </rect>
+                    <rect x="121" y="104" width="4" height="6" rx="1" fill="#fff" opacity="0.8"/>
+                    <rect x="127" y="104" width="4" height="6" rx="1" fill="#fff" opacity="0.8"/>
+                    <circle cx="133" cy="114" r="2.5" fill="#fff" opacity="0.7"/>
+                </svg>
+            </div>
+            <div class="absolute bottom-2 left-2 right-2 flex justify-between">
+                <div class="bg-marca-900/85 backdrop-blur-sm rounded-lg px-3 py-1.5 border border-marca-600/20">
+                    <p class="text-[10px] text-marca-300 uppercase tracking-wide">Distância</p>
+                    <p class="text-sm font-bold text-white font-display">8,5 km</p>
+                </div>
+                <div class="bg-marca-900/85 backdrop-blur-sm rounded-lg px-3 py-1.5 border border-marca-600/20">
+                    <p class="text-[10px] text-marca-300 uppercase tracking-wide">Tempo</p>
+                    <p class="text-sm font-bold text-white font-display">~16 min</p>
+                </div>
+                <div class="bg-marca-900/85 backdrop-blur-sm rounded-lg px-3 py-1.5 border border-marca-600/20">
+                    <p class="text-[10px] text-marca-300 uppercase tracking-wide">Chegada</p>
+                    <p class="text-sm font-bold text-white font-display">14:32</p>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <div class="flex items-center justify-between mb-2.5">
+                <h3 class="font-display text-sm font-bold text-white">Selecione o veículo</h3>
+                <span id="veiculo-selecionado-label" class="text-xs text-marca-400 opacity-0 transition-opacity">1 selecionado</span>
+            </div>
+            <div id="lista-veiculos" class="space-y-2.5"></div>
+        </div>
+
+        <div class="bg-marca-800/40 rounded-2xl border border-marca-600/20 p-4">
+            <h3 class="font-display text-sm font-bold text-white mb-3 flex items-center gap-2">
+                <svg class="w-4 h-4 text-marca-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+                Detalhamento da tarifa
+            </h3>
+            <div id="detalhamento-tarifa" class="space-y-2.5"></div>
+        </div>
+
+        <div class="bg-emerald-500/10 border border-emerald-400/20 rounded-2xl p-4">
+            <div class="flex gap-3">
+                <div class="w-8 h-8 rounded-full bg-emerald-500/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                </div>
+                <div>
+                    <h4 class="text-sm font-bold text-emerald-300 mb-0.5">Tarifa transparente</h4>
+                    <p class="text-xs text-emerald-200/70 leading-relaxed">Sem taxa percentual oculta. Você paga exatamente o valor calculado por quilometragem — sem surpresas na hora da viagem.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-marca-800/40 rounded-2xl border border-marca-600/20 p-4">
+            <h3 class="font-display text-sm font-bold text-white mb-3 flex items-center gap-2">
+                <svg class="w-4 h-4 text-marca-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                Comparativo de mercado
+            </h3>
+            <div class="space-y-2.5">
+                <div class="flex items-center justify-between">
+                    <span class="text-xs text-marca-300">Concorrente (30% taxa)</span>
+                    <span class="text-xs font-bold text-red-400">R$ 25,40</span>
+                </div>
+                <div class="w-full h-2 bg-marca-700/50 rounded-full overflow-hidden">
+                    <div class="h-full bg-red-400/50 rounded-full" style="width:75%"></div>
+                </div>
+                <div class="flex items-center justify-between">
+                    <span class="text-xs text-white font-medium">RotaCerta (taxa fixa)</span>
+                    <span class="text-xs font-bold text-emerald-400">R$ 15,50</span>
+                </div>
+                <div class="w-full h-2 bg-marca-700/50 rounded-full overflow-hidden">
+                    <div class="h-full bg-emerald-400 rounded-full" style="width:46%"></div>
+                </div>
+                <p class="text-[10px] text-marca-400 mt-1">Economia de R$ 9,90 (39% mais barato que a média do mercado)</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="fixed bottom-0 left-0 right-0 bg-gradient-to-t from-marca-900 via-marca-900/95 to-transparent pt-10 pb-5 px-4 z-30" style="max-width:430px;margin:0 auto;">
+        <div class="bg-marca-800/80 backdrop-blur-md rounded-2xl p-4 border border-marca-600/20 mb-3">
+            <div class="flex justify-between items-center mb-1">
+                <span class="text-xs text-marca-300">Valor total estimado</span>
+                <span id="valor-total-label" class="text-xs text-emerald-400 font-medium">Taxa fixa de R$ 3,00</span>
+            </div>
+            <div class="flex items-baseline gap-2">
+                <span id="valor-total-display" class="text-3xl font-display font-bold text-white">R$ 15,50</span>
+                <span class="text-xs text-marca-400">ou em 2x de R$ 7,75</span>
+            </div>
+        </div>
+        <button onclick="tarifa_e_rota_solicitar()" id="btn-solicitar" class="w-full bg-marca-500 hover:bg-marca-400 active:scale-[0.97] text-white font-display font-bold text-base py-4 rounded-2xl transition-all duration-200 shadow-lg shadow-marca-500/20 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>
+            Solicitar Corrida
+        </button>
+    </div>
+</section>
+
+<script>
+const VEICULOS_DADOS = [
+    { id:'economico', nome:'Econômico', icone:'carro-simples', tempo_chegada:'4 min', preco_km:1.50, cor:'#2563EB', destaque:'Mais barato' },
+    { id:'conforto', nome:'Conforto', icone:'carro-conforto', tempo_chegada:'6 min', preco_km:2.00, cor:'#1E3A5F', destaque:'Mais espaço' },
+    { id:'premium', nome:'Premium', icone:'carro-premium', tempo_chegada:'8 min', preco_km:2.80, cor:'#0F172A', destaque:'VIP' }
+];
+
+function tarifa_e_rota_calcPreco(precoKm, distancia) {
+    if (distancia <= 6) return 10.00;
+    if (distancia <= 20) return distancia * precoKm;
+    return 20 * precoKm + (distancia - 20) * (precoKm + 1.00);
+}
+
+function tarifa_e_rota_veiculoIcone(tipo) {
+    const icones = {
+        'carro-simples': '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z"/></svg>',
+        'carro-conforto': '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z"/></svg>',
+        'carro-premium': '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M5 11l1.5-4.5h11L19 11H5zm1.5-7h9l1.8 4H7.7L6.5 4zM18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>'
+    };
+    return icones[tipo] || icones['carro-simples'];
+}
+
+let tarifa_e_rota_veiculoSelecionado = null;
+
+function tarifa_e_rota_renderVeiculos() {
+    const dist = 8.5;
+    const taxaPlataforma = 3.00;
+    const container = document.getElementById('lista-veiculos');
+    if (!container) return;
+    container.innerHTML = '';
+
+    VEICULOS_DADOS.forEach((v, idx) => {
+        const precoBase = tarifa_e_rota_calcPreco(v.preco_km, dist);
+        const precoTotal = precoBase + taxaPlataforma;
+        const isSelected = tarifa_e_rota_veiculoSelecionado === v.id;
+
+        const div = document.createElement('div');
+        div.setAttribute('data-veiculo', v.id);
+        div.className = `relative bg-marca-800/40 border rounded-2xl p-3.5 cursor-pointer transition-all duration-200 active:scale-[0.98] ${isSelected ? 'border-marca-300 ring-2 ring-marca-300/30' : 'border-marca-600/20 hover:border-marca-500/40'}`;
+        div.onclick = () => tarifa_e_rota_selecionarVeiculo(v.id);
+
+        div.innerHTML = `
+            <div class="flex items-center gap-3.5">
+                <div class="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0" style="background:${v.cor}20;color:${v.cor}">
+                    <div class="w-7 h-7">${tarifa_e_rota_veiculoIcone(v.icone)}</div>
+                </div>
+                <div class="flex-1 min-w-0">
+                    <div class="flex items-center gap-2">
+                        <span class="font-display font-bold text-white text-sm">${v.nome}</span>
+                        ${v.destaque ? `<span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-marca-500/20 text-marca-300 border border-marca-500/30">${v.destaque}</span>` : ''}
+                    </div>
+                    <div class="flex items-center gap-1.5 mt-0.5">
+                        <svg class="w-3 h-3 text-marca-400 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        <span class="text-xs text-marca-400">Chegada em ~${v.tempo_chegada}</span>
+                    </div>
+                </div>
+                <div class="text-right flex-shrink-0">
+                    <p class="font-display font-bold text-white text-base">R$ ${precoTotal.toFixed(2).replace('.',',')}</p>
+                    <p class="text-[10px] text-marca-400">R$ ${precoBase.toFixed(2).replace('.',',')} + taxa</p>
+                </div>
+            </div>
+            ${isSelected ? `<div class="mt-2.5 pt-2.5 border-t border-marca-600/20"><div class="flex justify-between text-xs mb-1"><span class="text-marca-300">Corrida (${dist} km × R$ ${v.preco_km.toFixed(2)})</span><span class="text-white font-medium">R$ ${precoBase.toFixed(2).replace('.',',')}</span></div><div class="flex justify-between text-xs"><span class="text-marca-300">Taxa da plataforma</span><span class="text-emerald-400 font-medium">R$ ${taxaPlataforma.toFixed(2).replace('.',',')}</span></div></div>` : ''}
+        `;
+        container.appendChild(div);
+    });
+    tarifa_e_rota_renderDetalhamento();
+    tarifa_e_rota_atualizarTotal();
+}
+
+function tarifa_e_rota_selecionarVeiculo(id) {
+    tarifa_e_rota_veiculoSelecionado = id;
+    tarifa_e_rota_renderVeiculos();
+    const btn = document.getElementById('btn-solicitar');
+    if (btn) btn.disabled = false;
+    const label = document.getElementById('veiculo-selecionado-label');
+    if (label) { label.textContent = '1 selecionado'; label.style.opacity = '1'; }
+}
+
+function tarifa_e_rota_renderDetalhamento() {
+    const el = document.getElementById('detalhamento-tarifa');
+    if (!el || !tarifa_e_rota_veiculoSelecionado) return;
+    const v = VEICULOS_DADOS.find(x => x.id === tarifa_e_rota_veiculoSelecionado);
+    if (!v) return;
+    const dist = 8.5;
+    const precoBase = tarifa_e_rota_calcPreco(v.preco_km, dist);
+    const taxa = 3.00;
+    const total = precoBase + taxa;
+
+    let linhas = `<div class="flex justify-between text-sm mb-1.5"><span class="text-marca-300">Veículo selecionado</span><span class="text-white font-medium">${v.nome}</span></div>`;
+    linhas += `<div class="flex justify-between text-sm mb-1.5"><span class="text-marca-300">Distância estimada</span><span class="text-white font-medium">${dist} km</span></div>`;
+    linhas += `<div class="flex justify-between text-sm mb-1.5"><span class="text-marca-300">Tarifa por km</span><span class="text-white font-medium">R$ ${v.preco_km.toFixed(2).replace('.',',')}</span></div>`;
+
+    const faixa = dist <= 6 ? '1–6 km (valor fixo)' : dist <= 20 ? '7–20 km (por km)' : 'acima de 20 km (por km)';
+    linhas += `<div class="flex justify-between text-sm mb-1.5"><span class="text-marca-300">Faixa tarifária</span><span class="text-white font-medium">${faixa}</span></div>`;
+    linhas += `<div class="flex justify-between text-sm mb-2.5"><span class="text-marca-300">Valor da corrida</span><span class="text-white font-medium">R$ ${precoBase.toFixed(2).replace('.',',')}</span></div>`;
+    linhas += `<div class="border-t border-marca-600/20 pt-2.5 space-y-1.5">`;
+    linhas += `<div class="flex justify-between text-sm"><span class="text-marca-300">Taxa da plataforma</span><span class="text-emerald-400 font-semibold">+ R$ ${taxa.toFixed(2).replace('.',',')}</span></div>`;
+    linhas += `<div class="flex justify-between text-base pt-1.5 border-t border-marca-600/10"><span class="text-white font-bold">Total</span><span class="text-white font-display font-bold text-lg">R$ ${total.toFixed(2).replace('.',',')}</span></div>`;
+    linhas += `</div>`;
+    el.innerHTML = linhas;
+}
+
+function tarifa_e_rota_atualizarTotal() {
+    const display = document.getElementById('valor-total-display');
+    if (!display || !tarifa_e_rota_veiculoSelecionado) return;
+    const v = VEICULOS_DADOS.find(x => x.id === tarifa_e_rota_veiculoSelecionado);
+    if (!v) return;
+    const total = tarifa_e_rota_calcPreco(v.preco_km, 8.5) + 3.00;
+    display.textContent = 'R$ ' + total.toFixed(2).replace('.',',');
+}
+
+function tarifa_e_rota_solicitar() {
+    if (!tarifa_e_rota_veiculoSelecionado) { toast('Selecione um veículo','erro'); return; }
+    const v = VEICULOS_DADOS.find(x => x.id === tarifa_e_rota_veiculoSelecionado);
+    if (!v) return;
+    const precoBase = tarifa_e_rota_calcPreco(v.preco_km, 8.5);
+    const total = precoBase + 3.00;
+    const btn = document.getElementById('btn-solicitar');
+    if (btn) { btn.innerHTML = '<svg class="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/></svg> Enviando...'; btn.disabled = true; }
+    setTimeout(() => {
+        if (btn) { btn.innerHTML = '<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> Corrida solicitada!'; btn.classList.remove('bg-marca-500','hover:bg-marca-400'); btn.classList.add('bg-emerald-500'); }
+        toast('Corrida solicitada! Motorista a caminho.','ok');
+        setTimeout(() => mostrarTela('acompanhar-corrida'), 1500);
+    }, 1800);
+}
+
+function tarifa_e_rota_voltar() { mostrarTela('solicitacao-corrida'); }
+
+function tarifa_e_rota_init() { tarifa_e_rota_veiculoSelecionado = null; tarifa_e_rota_renderVeiculos(); const btn = document.getElementById('btn-solicitar'); if (btn) btn.disabled = true; const label = document.getElementById('veiculo-selecionado-label'); if (label) label.style.opacity = '0'; }
+
+if (typeof mostrarTela === 'function') { const orig = mostrarTela; mostrarTela = function(id) { if (id === 'tarifa-e-rota') tarifa_e_rota_init(); orig(id); }; }
+document.addEventListener('DOMContentLoaded', () => { if (document.querySelector('[data-tela="tarifa-e-rota"]')) tarifa_e_rota_init(); });
+</script>
+
     <!-- TELAS -->
 
     </main>
