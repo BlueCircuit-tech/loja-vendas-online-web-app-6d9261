@@ -1603,6 +1603,391 @@ document.addEventListener('DOMContentLoaded', () => { if (document.querySelector
     </script>
 </section>
 
+    <section data-tela="painel-motorista" class="hidden">
+      <div class="px-4 py-5 space-y-4 max-w-[430px] mx-auto">
+        <!-- Toggle Online/Offline -->
+        <div class="bg-white rounded-2xl p-4 shadow-sm border border-gray-100 fade-in">
+          <div class="flex items-center justify-between">
+            <div>
+              <h2 class="text-lg font-display font-bold text-gray-800">Olá, Carlos</h2>
+              <p class="text-sm text-gray-500 mt-0.5" id="driver-status-text">Você está offline</p>
+            </div>
+            <button id="btn-toggle-online" onclick="painel_motorista_toggleOnline()" class="relative w-16 h-9 rounded-full bg-gray-300 transition-all duration-300 active:scale-95 cursor-pointer" aria-label="Alternar status online">
+              <span id="toggle-circle" class="absolute top-1 left-1 w-7 h-7 rounded-full bg-white shadow-md transition-all duration-300 flex items-center justify-center">
+                <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636a9 9 0 010 12.728m0 0l-2.829-2.829m2.829 2.829L21 21M15.536 8.464a5 5 0 010 7.072m0 0l-2.829-2.829m-4.243 2.829a4.978 4.978 0 01-1.414-2.83m-1.414 5.658a9 9 0 01-2.167-9.238m7.824 2.167a1 1 0 111.414 1.414m-1.414-1.414L3 3m8.293 8.293l1.414 1.414"/></svg>
+              </span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Cards de Indicadores -->
+        <div class="grid grid-cols-2 gap-3 fade-in" style="animation-delay:0.1s">
+          <div class="bg-white rounded-2xl p-4 shadow-sm border border-gray-100">
+            <div class="flex items-center gap-2 mb-2">
+              <div class="w-8 h-8 rounded-lg bg-green-50 flex items-center justify-center">
+                <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              </div>
+              <span class="text-xs font-body text-gray-500 uppercase tracking-wide">Ganhos Hoje</span>
+            </div>
+            <p class="text-xl font-display font-bold text-gray-800">R$ 247,80</p>
+            <p class="text-xs text-green-600 mt-1 flex items-center gap-1">
+              <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/></svg>
+              +12% vs ontem
+            </p>
+          </div>
+          <div class="bg-white rounded-2xl p-4 shadow-sm border border-gray-100">
+            <div class="flex items-center gap-2 mb-2">
+              <div class="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center">
+                <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+              </div>
+              <span class="text-xs font-body text-gray-500 uppercase tracking-wide">Ganhos Semana</span>
+            </div>
+            <p class="text-xl font-display font-bold text-gray-800">R$ 1.482,50</p>
+            <p class="text-xs text-green-600 mt-1 flex items-center gap-1">
+              <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/></svg>
+              +8% vs semana anterior
+            </p>
+          </div>
+        </div>
+
+        <!-- Contador de Corridas -->
+        <div class="bg-white rounded-2xl p-4 shadow-sm border border-gray-100 fade-in" style="animation-delay:0.15s">
+          <div class="flex items-center justify-between mb-3">
+            <div class="flex items-center gap-2">
+              <div class="w-8 h-8 rounded-lg bg-indigo-50 flex items-center justify-center">
+                <svg class="w-4 h-4 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/></svg>
+              </div>
+              <span class="text-sm font-display font-semibold text-gray-700">Corridas Hoje</span>
+            </div>
+            <span class="text-2xl font-display font-bold text-marca-700" id="corridas-hoje">14</span>
+          </div>
+          <div class="w-full bg-gray-100 rounded-full h-2.5">
+            <div class="bg-marca-500 h-2.5 rounded-full transition-all duration-500" style="width: 47%"></div>
+          </div>
+          <p class="text-xs text-gray-400 mt-1.5">Média de 3,8 corridas/hora</p>
+        </div>
+
+        <!-- Carteira de Ganhos -->
+        <div class="bg-gradient-to-br from-marca-700 to-marca-900 rounded-2xl p-5 shadow-lg fade-in text-white" style="animation-delay:0.2s" onclick="painel_motorista_abrirCarteira()">
+          <div class="flex items-start justify-between mb-4">
+            <div>
+              <p class="text-blue-200 text-xs font-body uppercase tracking-wider mb-1">Saldo Disponível</p>
+              <p class="text-3xl font-display font-bold">R$ 1.247,30</p>
+            </div>
+            <div class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center backdrop-blur-sm">
+              <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4v-4m12 4v-4m-7 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            </div>
+          </div>
+          <div class="flex gap-4">
+            <div class="bg-white/10 rounded-xl px-3 py-2 flex-1 backdrop-blur-sm">
+              <p class="text-blue-200 text-xs">A receber</p>
+              <p class="text-sm font-semibold">R$ 320,00</p>
+            </div>
+            <div class="bg-white/10 rounded-xl px-3 py-2 flex-1 backdrop-blur-sm">
+              <p class="text-blue-200 text-xs">Sacado no mês</p>
+              <p class="text-sm font-semibold">R$ 4.580,00</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Plano de Assinatura -->
+        <div class="bg-white rounded-2xl p-4 shadow-sm border border-gray-100 fade-in" style="animation-delay:0.25s">
+          <div class="flex items-center gap-2 mb-3">
+            <div class="w-8 h-8 rounded-lg bg-amber-50 flex items-center justify-center">
+              <svg class="w-4 h-4 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg>
+            </div>
+            <div>
+              <span class="text-sm font-display font-semibold text-gray-800">Plano Mensal</span>
+              <p class="text-xs text-gray-500">R$ 20,00/mês</p>
+            </div>
+            <span class="ml-auto bg-green-100 text-green-700 text-xs font-semibold px-2 py-1 rounded-full">Ativo</span>
+          </div>
+          <div class="bg-gray-50 rounded-xl p-3 mb-3">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs text-gray-600">Desconto por corrida</span>
+              <span class="text-sm font-bold text-marca-700">- R$ 0,50</span>
+            </div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs text-gray-600">Corridas realizadas</span>
+              <span class="text-sm font-semibold text-gray-800" id="corridas-plano">18 de 40</span>
+            </div>
+            <div class="w-full bg-gray-200 rounded-full h-2">
+              <div class="bg-marca-500 h-2 rounded-full transition-all duration-500" id="barra-plano" style="width: 45%"></div>
+            </div>
+            <p class="text-xs text-gray-400 mt-1.5" id="restantes-plano">22 corridas restantes no plano</p>
+          </div>
+          <button onclick="painel_motorista_verDetalhesPlano()" class="w-full text-center text-sm font-semibold text-marca-600 hover:text-marca-700 py-2 rounded-xl hover:bg-blue-50 transition-all duration-200 active:scale-95 cursor-pointer">
+            Ver detalhes do plano
+          </button>
+        </div>
+
+        <!-- Badge Transparência -->
+        <div class="bg-green-50 border border-green-200 rounded-2xl p-4 flex items-start gap-3 fade-in" style="animation-delay:0.3s">
+          <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0 mt-0.5">
+            <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+          </div>
+          <div>
+            <p class="text-sm font-semibold text-green-800">Transparência total</p>
+            <p class="text-xs text-green-700 mt-0.5 leading-relaxed">Você recebe o valor integral da tarifa, sem taxa percentual. Sem surpresas.</p>
+          </div>
+        </div>
+
+        <!-- Botões Rápidos -->
+        <div class="grid grid-cols-3 gap-3 fade-in" style="animation-delay:0.35s">
+          <button onclick="painel_motorista_verHistoricoGanhos()" class="card bg-white hover:shadow-md transition-all duration-200 active:scale-95 cursor-pointer flex flex-col items-center gap-2 py-4">
+            <div class="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center">
+              <svg class="w-5 h-5 text-marca-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+            </div>
+            <span class="text-xs font-semibold text-gray-700 text-center leading-tight">Histórico de Ganhos</span>
+          </button>
+          <button onclick="painel_motorista_abrirSuporte()" class="card bg-white hover:shadow-md transition-all duration-200 active:scale-95 cursor-pointer flex flex-col items-center gap-2 py-4">
+            <div class="w-10 h-10 rounded-xl bg-teal-50 flex items-center justify-center">
+              <svg class="w-5 h-5 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+            </div>
+            <span class="text-xs font-semibold text-gray-700 text-center leading-tight">Suporte</span>
+          </button>
+          <button onclick="painel_motorista_verRegulamento()" class="card bg-white hover:shadow-md transition-all duration-200 active:scale-95 cursor-pointer flex flex-col items-center gap-2 py-4">
+            <div class="w-10 h-10 rounded-xl bg-amber-50 flex items-center justify-center">
+              <svg class="w-5 h-5 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 4.168 6.253v13C4.168 19.767 5.754 20 7.5 20s3.332.233 4.168 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.168 1.253v13C19.832 19.767 18.247 20 16.5 20c-1.746 0-3.332-.233-4.168-1.253"/></svg>
+            </div>
+            <span class="text-xs font-semibold text-gray-700 text-center leading-tight">Regulamento</span>
+          </button>
+        </div>
+
+        <!-- Gráfico Semanal -->
+        <div class="bg-white rounded-2xl p-4 shadow-sm border border-gray-100 fade-in" style="animation-delay:0.4s">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-sm font-display font-semibold text-gray-800">Ganhos da Semana</h3>
+            <span class="text-xs text-gray-400">Últimos 7 dias</span>
+          </div>
+          <svg viewBox="0 0 320 120" class="w-full h-28">
+            <defs>
+              <linearGradient id="chartFill" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#2563EB" stop-opacity="0.15"/>
+                <stop offset="100%" stop-color="#2563EB" stop-opacity="0.01"/>
+              </linearGradient>
+            </defs>
+            <polyline points="15,95 60,78 105,88 150,55 195,62 240,40 285,48 305,45" fill="none" stroke="#2563EB" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <polyline points="15,95 60,78 105,88 150,55 195,62 240,40 285,48 305,45 305,118 15,118" fill="url(#chartFill)" stroke="none"/>
+            <circle cx="15" cy="95" r="4" fill="#2563EB"/>
+            <circle cx="60" cy="78" r="4" fill="#2563EB"/>
+            <circle cx="105" cy="88" r="4" fill="#2563EB"/>
+            <circle cx="150" cy="55" r="4" fill="#1E3A5F"/>
+            <circle cx="195" cy="62" r="4" fill="#2563EB"/>
+            <circle cx="240" cy="40" r="5" fill="#1E3A5F" stroke="#F8FAFC" stroke-width="2"/>
+            <circle cx="285" cy="48" r="4" fill="#2563EB"/>
+            <circle cx="305" cy="45" r="4" fill="#2563EB"/>
+            <text x="15" y="112" text-anchor="middle" class="text-[9px] fill-gray-400 font-body">Seg</text>
+            <text x="60" y="112" text-anchor="middle" class="text-[9px] fill-gray-400 font-body">Ter</text>
+            <text x="105" y="112" text-anchor="middle" class="text-[9px] fill-gray-400 font-body">Qua</text>
+            <text x="150" y="112" text-anchor="middle" class="text-[9px] fill-gray-400 font-body">Qui</text>
+            <text x="195" y="112" text-anchor="middle" class="text-[9px] fill-gray-400 font-body">Sex</text>
+            <text x="240" y="112" text-anchor="middle" class="text-[9px] fill-gray-400 font-body">Sáb</text>
+            <text x="285" y="112" text-anchor="middle" class="text-[9px] fill-gray-400 font-body">Dom</text>
+            <text x="150" y="16" text-anchor="middle" class="text-[10px] fill-gray-500 font-display font-semibold">R$ 1.482,50</text>
+          </svg>
+        </div>
+
+        <!-- Últimas Corridas -->
+        <div class="fade-in" style="animation-delay:0.45s">
+          <div class="flex items-center justify-between mb-3">
+            <h3 class="text-sm font-display font-semibold text-gray-800">Últimas Corridas</h3>
+            <button onclick="painel_motorista_verHistoricoGanhos()" class="text-xs text-marca-600 font-semibold hover:text-marca-700 transition-colors cursor-pointer">Ver todas</button>
+          </div>
+          <div class="space-y-2" id="lista-ultimas-corridas">
+            <div onclick="painel_motorista_detalheCorrida(0)" class="bg-white rounded-xl p-3 shadow-sm border border-gray-100 flex items-center gap-3 cursor-pointer active:scale-[0.98] transition-all duration-150 hover:shadow-md">
+              <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0">
+                <span class="text-sm font-bold text-marca-700">MR</span>
+              </div>
+              <div class="flex-1 min-w-0">
+                <p class="text-sm font-semibold text-gray-800 truncate">Maria Rodrigues</p>
+                <p class="text-xs text-gray-500">Av. Paulista, 1000 → Rua Augusta, 500</p>
+              </div>
+              <div class="text-right flex-shrink-0">
+                <p class="text-sm font-bold text-green-600">R$ 28,40</p>
+                <span class="inline-block text-[10px] font-semibold px-1.5 py-0.5 rounded-full bg-green-100 text-green-700">Concluída</span>
+              </div>
+            </div>
+            <div onclick="painel_motorista_detalheCorrida(1)" class="bg-white rounded-xl p-3 shadow-sm border border-gray-100 flex items-center gap-3 cursor-pointer active:scale-[0.98] transition-all duration-150 hover:shadow-md">
+              <div class="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center flex-shrink-0">
+                <span class="text-sm font-bold text-purple-700">JS</span>
+              </div>
+              <div class="flex-1 min-w-0">
+                <p class="text-sm font-semibold text-gray-800 truncate">João Silva</p>
+                <p class="text-xs text-gray-500">Rua Oscar Freire, 200 → Shopping Iguatemi</p>
+              </div>
+              <div class="text-right flex-shrink-0">
+                <p class="text-sm font-bold text-green-600">R$ 18,90</p>
+                <span class="inline-block text-[10px] font-semibold px-1.5 py-0.5 rounded-full bg-green-100 text-green-700">Concluída</span>
+              </div>
+            </div>
+            <div onclick="painel_motorista_detalheCorrida(2)" class="bg-white rounded-xl p-3 shadow-sm border border-gray-100 flex items-center gap-3 cursor-pointer active:scale-[0.98] transition-all duration-150 hover:shadow-md">
+              <div class="w-10 h-10 rounded-full bg-amber-100 flex items-center justify-center flex-shrink-0">
+                <span class="text-sm font-bold text-amber-700">AF</span>
+              </div>
+              <div class="flex-1 min-w-0">
+                <p class="text-sm font-semibold text-gray-800 truncate">Ana Ferreira</p>
+                <p class="text-xs text-gray-500">Metrô Tietê → Rua Haddock Lobo, 350</p>
+              </div>
+              <div class="text-right flex-shrink-0">
+                <p class="text-sm font-bold text-green-600">R$ 35,20</p>
+                <span class="inline-block text-[10px] font-semibold px-1.5 py-0.5 rounded-full bg-green-100 text-green-700">Concluída</span>
+              </div>
+            </div>
+            <div onclick="painel_motorista_detalheCorrida(3)" class="bg-white rounded-xl p-3 shadow-sm border border-gray-100 flex items-center gap-3 cursor-pointer active:scale-[0.98] transition-all duration-150 hover:shadow-md">
+              <div class="w-10 h-10 rounded-full bg-teal-100 flex items-center justify-center flex-shrink-0">
+                <span class="text-sm font-bold text-teal-700">PL</span>
+              </div>
+              <div class="flex-1 min-w-0">
+                <p class="text-sm font-semibold text-gray-800 truncate">Pedro Lima</p>
+                <p class="text-xs text-gray-500">Av. Brasil, 2500 → Aeroporto GRU</p>
+              </div>
+              <div class="text-right flex-shrink-0">
+                <p class="text-sm font-bold text-green-600">R$ 67,50</p>
+                <span class="inline-block text-[10px] font-semibold px-1.5 py-0.5 rounded-full bg-green-100 text-green-700">Concluída</span>
+              </div>
+            </div>
+            <div onclick="painel_motorista_detalheCorrida(4)" class="bg-white rounded-xl p-3 shadow-sm border border-gray-100 flex items-center gap-3 cursor-pointer active:scale-[0.98] transition-all duration-150 hover:shadow-md">
+              <div class="w-10 h-10 rounded-full bg-rose-100 flex items-center justify-center flex-shrink-0">
+                <span class="text-sm font-bold text-rose-700">CO</span>
+              </div>
+              <div class="flex-1 min-w-0">
+                <p class="text-sm font-semibold text-gray-800 truncate">Carla Oliveira</p>
+                <p class="text-xs text-gray-500">Rua da Consolação, 800 → Pinheiros</p>
+              </div>
+              <div class="text-right flex-shrink-0">
+                <p class="text-sm font-bold text-green-600">R$ 22,10</p>
+                <span class="inline-block text-[10px] font-semibold px-1.5 py-0.5 rounded-full bg-green-100 text-green-700">Concluída</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <script>
+    (function() {
+      var driverOnline = false;
+      var corridasRealizadas = 18;
+      var corridasPlano = 18;
+      var corridasHoje = 14;
+
+      function painel_motorista_toggleOnline() {
+        driverOnline = !driverOnline;
+        var btn = document.getElementById('btn-toggle-online');
+        var circle = document.getElementById('toggle-circle');
+        var text = document.getElementById('driver-status-text');
+        if (driverOnline) {
+          btn.classList.remove('bg-gray-300');
+          btn.classList.add('bg-green-500');
+          circle.classList.remove('left-1');
+          circle.classList.add('left-9');
+          circle.innerHTML = '<svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>';
+          text.textContent = 'Você está online — aguardando corridas';
+          text.classList.remove('text-gray-500');
+          text.classList.add('text-green-600');
+          toast('Você está online! Aguardando solicitações.', 'ok');
+        } else {
+          btn.classList.remove('bg-green-500');
+          btn.classList.add('bg-gray-300');
+          circle.classList.remove('left-9');
+          circle.classList.add('left-1');
+          circle.innerHTML = '<svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636a9 9 0 010 12.728m0 0l-2.829-2.829m2.829 2.829L21 21M15.536 8.464a5 5 0 010 7.072m0 0l-2.829-2.829m-4.243 2.829a4.978 4.978 0 01-1.414-2.83m-1.414 5.658a9 9 0 01-2.167-9.238m7.824 2.167a1 1 0 111.414 1.414m-1.414-1.414L3 3m8.293 8.293l1.414 1.414"/></svg>';
+          text.textContent = 'Você está offline';
+          text.classList.remove('text-green-600');
+          text.classList.add('text-gray-500');
+          toast('Você está offline.', 'info');
+        }
+      }
+
+      function painel_motorista_abrirCarteira() {
+        var html = '<div class="space-y-3">';
+        html += '<div class="flex justify-between"><span class="text-gray-600">Saldo disponível</span><span class="font-bold text-gray-800">R$ 1.247,30</span></div>';
+        html += '<div class="flex justify-between"><span class="text-gray-600">A receber</span><span class="font-semibold text-gray-800">R$ 320,00</span></div>';
+        html += '<div class="flex justify-between"><span class="text-gray-600">Sacado no mês</span><span class="font-semibold text-gray-800">R$ 4.580,00</span></div>';
+        html += '<div class="border-t pt-2 mt-2 flex justify-between"><span class="text-gray-600">Último saque</span><span class="text-sm text-gray-800">15/01/2026 — R$ 800,00</span></div>';
+        html += '</div>';
+        abrirModal(html, 'Carteira Digital');
+      }
+
+      function painel_motorista_verDetalhesPlano() {
+        var html = '<div class="space-y-3 text-sm">';
+        html += '<div class="flex justify-between"><span class="text-gray-600">Plano</span><span class="font-semibold text-gray-800">Mensal Standard</span></div>';
+        html += '<div class="flex justify-between"><span class="text-gray-600">Valor</span><span class="font-semibold text-gray-800">R$ 20,00/mês</span></div>';
+        html += '<div class="flex justify-between"><span class="text-gray-600">Desconto por corrida</span><span class="font-semibold text-green-600">R$ 0,50</span></div>';
+        html += '<div class="flex justify-between"><span class="text-gray-600">Corridas realizadas</span><span class="font-semibold text-gray-800">' + corridasPlano + ' de 40</span></div>';
+        html += '<div class="flex justify-between"><span class="text-gray-600">Corridas restantes</span><span class="font-semibold text-gray-800">' + (40 - corridasPlano) + '</span></div>';
+        html += '<div class="flex justify-between"><span class="text-gray-600">Próxima renovação</span><span class="font-semibold text-gray-800">15/02/2026</span></div>';
+        html += '<p class="text-xs text-gray-400 mt-2">Ao completar 40 corridas, o desconto de R$ 0,50 por corrida cessa até a próxima renovação do plano.</p>';
+        html += '</div>';
+        abrirModal(html, 'Detalhes do Plano');
+      }
+
+      function painel_motorista_verHistoricoGanhos() {
+        mostrarTela('painel-admin');
+      }
+
+      function painel_motorista_abrirSuporte() {
+        var html = '<div class="space-y-3">';
+        html += '<p class="text-sm text-gray-600">Escolha uma opção de atendimento:</p>';
+        html += '<button onclick="painel_motorista_chatSuporte()" class="w-full bg-green-600 text-white rounded-xl py-3 font-semibold text-sm hover:bg-green-700 transition-all active:scale-95 cursor-pointer flex items-center justify-center gap-2">';
+        html += '<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>';
+        html += 'Chat via WhatsApp';
+        html += '</button>';
+        html += '<button onclick="toast(\"Central de ajuda aberta.\", \'info\')" class="w-full bg-gray-100 text-gray-700 rounded-xl py-3 font-semibold text-sm hover:bg-gray-200 transition-all active:scale-95 cursor-pointer">Central de Ajuda</button>';
+        html += '</div>';
+        abrirModal(html, 'Suporte');
+      }
+
+      function painel_motorista_chatSuporte() {
+        fecharModal();
+        toast('Redirecionando para o WhatsApp...', 'info');
+      }
+
+      function painel_motorista_verRegulamento() {
+        var html = '<div class="space-y-3 text-sm max-h-72 overflow-y-auto">';
+        html += '<p class="text-gray-600 leading-relaxed"><strong class="text-gray-800">1. Tarifas:</strong> Corridas curtas (7 a 20 km): R$ 1,50/km. Corridas longas (acima de 20 km): R$ 2,50/km. Valor mínimo: R$ 10,00.</p>';
+        html += '<p class="text-gray-600 leading-relaxed"><strong class="text-gray-800">2. Assinatura:</strong> Plano mensal de R$ 20,00 com desconto de R$ 0,50 por corrida em até 40 corridas/mês.</p>';
+        html += '<p class="text-gray-600 leading-relaxed"><strong class="text-gray-800">3. Transparência:</strong> Sem taxa percentual. O motorista recebe o valor integral da tarifa cobrada do passageiro.</p>';
+        html += '<p class="text-gray-600 leading-relaxed"><strong class="text-gray-800">4. Pagamentos:</strong> Saques disponíveis a partir de R$ 50,00. Processamento em até 2 dias úteis.</p>';
+        html += '<p class="text-gray-600 leading-relaxed"><strong class="text-gray-800">5. Cancelamentos:</strong> Cancelamentos com menos de 2 minutos de antecedência podem gerar taxa.</p>';
+        html += '</div>';
+        abrirModal(html, 'Regulamento');
+      }
+
+      function painel_motorista_detalheCorrida(idx) {
+        var corridas = [
+          {passageiro: 'Maria Rodrigues', valor: 28.40, km: 8.5, origem: 'Av. Paulista, 1000', destino: 'Rua Augusta, 500', data: '2026-01-20 14:32', tempo: '18 min'},
+          {passageiro: 'João Silva', valor: 18.90, km: 5.2, origem: 'Rua Oscar Freire, 200', destino: 'Shopping Iguatemi', data: '2026-01-20 12:15', tempo: '12 min'},
+          {passageiro: 'Ana Ferreira', valor: 35.20, km: 14.0, origem: 'Metrô Tietê', destino: 'Rua Haddock Lobo, 350', data: '2026-01-20 09:48', tempo: '22 min'},
+          {passageiro: 'Pedro Lima', valor: 67.50, km: 28.0, origem: 'Av. Brasil, 2500', destino: 'Aeroporto GRU', data: '2026-01-19 21:05', tempo: '35 min'},
+          {passageiro: 'Carla Oliveira', valor: 22.10, km: 6.8, origem: 'Rua da Consolação, 800', destino: 'Pinheiros', data: '2026-01-19 17:22', tempo: '15 min'}
+        ];
+        var c = corridas[idx] || corridas[0];
+        var html = '<div class="space-y-3">';
+        html += '<div class="flex items-center gap-3 mb-2"><div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center"><span class="text-sm font-bold text-marca-700">' + c.passageiro.split(' ').map(function(n){return n[0];}).join('') + '</span></div><div><p class="font-semibold text-gray-800">' + c.passageiro + '</p><p class="text-xs text-gray-500">' + c.data + '</p></div></div>';
+        html += '<div class="bg-gray-50 rounded-xl p-3 space-y-2">';
+        html += '<div class="flex justify-between"><span class="text-gray-600">Origem</span><span class="text-sm font-medium text-gray-800">' + c.origem + '</span></div>';
+        html += '<div class="flex justify-between"><span class="text-gray-600">Destino</span><span class="text-sm font-medium text-gray-800">' + c.destino + '</span></div>';
+        html += '<div class="flex justify-between"><span class="text-gray-600">Distância</span><span class="text-sm font-medium text-gray-800">' + c.km + ' km</span></div>';
+        html += '<div class="flex justify-between"><span class="text-gray-600">Tempo</span><span class="text-sm font-medium text-gray-800">' + c.tempo + '</span></div>';
+        html += '</div>';
+        html += '<div class="bg-green-50 rounded-xl p-3 flex justify-between items-center"><span class="text-green-700 font-medium">Valor recebido</span><span class="text-xl font-bold text-green-700">R$ ' + c.valor.toFixed(2).replace('.', ',') + '</span></div>';
+        html += '</div>';
+        abrirModal(html, 'Detalhes da Corrida');
+      }
+
+      window.painel_motorista_toggleOnline = painel_motorista_toggleOnline;
+      window.painel_motorista_abrirCarteira = painel_motorista_abrirCarteira;
+      window.painel_motorista_verDetalhesPlano = painel_motorista_verDetalhesPlano;
+      window.painel_motorista_verHistoricoGanhos = painel_motorista_verHistoricoGanhos;
+      window.painel_motorista_abrirSuporte = painel_motorista_abrirSuporte;
+      window.painel_motorista_verRegulamento = painel_motorista_verRegulamento;
+      window.painel_motorista_chatSuporte = painel_motorista_chatSuporte;
+      window.painel_motorista_detalheCorrida = painel_motorista_detalheCorrida;
+    })();
+    </script>
+
     <!-- TELAS -->
 
     </main>
