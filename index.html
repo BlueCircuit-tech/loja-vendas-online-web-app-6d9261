@@ -2293,6 +2293,502 @@ if (document.querySelector('[data-tela="solicitacao-corrida"]')) {
 }
 </script>
 
+    <section data-tela="painel-admin" class="hidden">
+      <div class="px-4 py-4 space-y-4">
+        <!-- Cabeçalho da tela -->
+        <div class="flex items-center justify-between">
+          <div>
+            <h1 class="text-xl font-display font-bold text-marca-900">Painel Administrativo</h1>
+            <p class="text-sm text-gray-500 mt-0.5">Visão geral da plataforma em tempo real</p>
+          </div>
+          <div class="flex gap-2">
+            <button onclick="abrirModal('<div class=space-y-4><p class=text-sm text-gray-600>Selecione o formato de exportação:</p><div class=grid grid-cols-2 gap-3><button onclick=painel_admin_exportar(\'csv\');fecharModal() class=card p-4 text-center hover:border-marca-400 transition cursor-pointer><svg class=w-8 h-8 mx-auto text-marca-600 mb-2 fill=none stroke=currentColor viewBox=0 0 24 24><path stroke-linecap=round stroke-linejoin=round stroke-width=2 d=M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z/></svg><span class=text-sm font-medium>CSV</span></button><button onclick=painel_admin_exportar(\'pdf\');fecharModal() class=card p-4 text-center hover:border-marca-400 transition cursor-pointer><svg class=w-8 h-8 mx-auto text-red-500 mb-2 fill=none stroke=currentColor viewBox=0 0 24 24><path stroke-linecap=round stroke-linejoin=round stroke-width=2 d=M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z/></svg><span class=text-sm font-medium>PDF</span></button></div></div>', 'Exportar Relatório')" class="btn btn-primary text-sm py-2 px-3 active:scale-95 transition flex items-center gap-1.5">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+              Exportar
+            </button>
+          </div>
+        </div>
+
+        <!-- Cards de indicadores -->
+        <div class="grid grid-cols-2 gap-3" id="kpi-cards">
+          <div class="card p-4 cursor-pointer hover:border-marca-400 transition group" onclick="painel_admin_detalheKPI('corridas')">
+            <div class="flex items-center justify-between mb-2">
+              <div class="w-9 h-9 rounded-lg bg-marca-50 flex items-center justify-center">
+                <svg class="w-5 h-5 text-marca-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/></svg>
+              </div>
+              <span class="text-xs font-medium text-green-600 bg-green-50 px-1.5 py-0.5 rounded-full flex items-center gap-0.5">
+                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/></svg>
+                +12,4%
+              </span>
+            </div>
+            <p class="text-2xl font-display font-bold text-marca-900" id="kpi-corridas">1.847</p>
+            <p class="text-xs text-gray-500 mt-0.5">Corridas no período</p>
+          </div>
+          <div class="card p-4 cursor-pointer hover:border-marca-400 transition group" onclick="painel_admin_detalheKPI('receita')">
+            <div class="flex items-center justify-between mb-2">
+              <div class="w-9 h-9 rounded-lg bg-green-50 flex items-center justify-center">
+                <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              </div>
+              <span class="text-xs font-medium text-green-600 bg-green-50 px-1.5 py-0.5 rounded-full flex items-center gap-0.5">
+                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/></svg>
+                +8,2%
+              </span>
+            </div>
+            <p class="text-2xl font-display font-bold text-marca-900" id="kpi-receita">R$ 28.471</p>
+            <p class="text-xs text-gray-500 mt-0.5">Receita total de taxas</p>
+          </div>
+          <div class="card p-4 cursor-pointer hover:border-marca-400 transition group" onclick="painel_admin_detalheKPI('motoristas')">
+            <div class="flex items-center justify-between mb-2">
+              <div class="w-9 h-9 rounded-lg bg-blue-50 flex items-center justify-center">
+                <svg class="w-5 h-5 text-marca-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+              </div>
+              <span class="text-xs font-medium text-green-600 bg-green-50 px-1.5 py-0.5 rounded-full flex items-center gap-0.5">
+                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/></svg>
+                +5
+              </span>
+            </div>
+            <p class="text-2xl font-display font-bold text-marca-900" id="kpi-motoristas">142</p>
+            <p class="text-xs text-gray-500 mt-0.5">Motoristas ativos</p>
+          </div>
+          <div class="card p-4 cursor-pointer hover:border-marca-400 transition group" onclick="painel_admin_detalheKPI('passageiros')">
+            <div class="flex items-center justify-between mb-2">
+              <div class="w-9 h-9 rounded-lg bg-purple-50 flex items-center justify-center">
+                <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+              </div>
+              <span class="text-xs font-medium text-green-600 bg-green-50 px-1.5 py-0.5 rounded-full flex items-center gap-0.5">
+                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/></svg>
+                +23%
+              </span>
+            </div>
+            <p class="text-2xl font-display font-bold text-marca-900" id="kpi-passageiros">3.291</p>
+            <p class="text-xs text-gray-500 mt-0.5">Passageiros ativos</p>
+          </div>
+        </div>
+
+        <!-- Gráfico de linhas -->
+        <div class="card p-4">
+          <div class="flex items-center justify-between mb-3">
+            <h2 class="text-sm font-display font-semibold text-marca-900">Volume de corridas por dia</h2>
+            <div class="flex gap-1">
+              <button onclick="painel_admin_setPeriodo('semana')" id="btn-periodo-semana" class="text-xs px-2.5 py-1 rounded-md bg-marca-600 text-white transition">7 dias</button>
+              <button onclick="painel_admin_setPeriodo('mes')" id="btn-periodo-mes" class="text-xs px-2.5 py-1 rounded-md bg-gray-100 text-gray-600 hover:bg-gray-200 transition">30 dias</button>
+            </div>
+          </div>
+          <div class="relative h-44">
+            <svg id="grafico-corridas" viewBox="0 0 340 140" class="w-full h-full" preserveAspectRatio="none">
+              <!-- Grid lines -->
+              <line x1="40" y1="10" x2="330" y2="10" stroke="#E5E7EB" stroke-width="0.5"/>
+              <line x1="40" y1="40" x2="330" y2="40" stroke="#E5E7EB" stroke-width="0.5"/>
+              <line x1="40" y1="70" x2="330" y2="70" stroke="#E5E7EB" stroke-width="0.5"/>
+              <line x1="40" y1="100" x2="330" y2="100" stroke="#E5E7EB" stroke-width="0.5"/>
+              <line x1="40" y1="130" x2="330" y2="130" stroke="#E5E7EB" stroke-width="0.5"/>
+              <!-- Y-axis labels -->
+              <text x="35" y="14" text-anchor="end" class="text-[9px] fill-gray-400">300</text>
+              <text x="35" y="44" text-anchor="end" class="text-[9px] fill-gray-400">225</text>
+              <text x="35" y="74" text-anchor="end" class="text-[9px] fill-gray-400">150</text>
+              <text x="35" y="104" text-anchor="end" class="text-[9px] fill-gray-400">75</text>
+              <text x="35" y="134" text-anchor="end" class="text-[9px] fill-gray-400">0</text>
+              <!-- Area fill -->
+              <defs>
+                <linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#2563EB" stop-opacity="0.15"/>
+                  <stop offset="100%" stop-color="#2563EB" stop-opacity="0"/>
+                </linearGradient>
+              </defs>
+              <path id="grafico-area" d="" fill="url(#areaGrad)"/>
+              <!-- Line -->
+              <path id="grafico-linha" d="" fill="none" stroke="#2563EB" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <!-- Data points -->
+              <g id="grafico-pontos"></g>
+              <!-- X-axis labels -->
+              <g id="grafico-labels"></g>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Alertas -->
+        <div class="grid grid-cols-1 gap-3">
+          <div class="card p-3 border-l-4 border-l-yellow-400 bg-yellow-50/50 cursor-pointer hover:bg-yellow-50 transition" onclick="abrirModal(painel_admin_modalMotoristasPendentes(), 'Motoristas Pendentes de Aprovação')">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-full bg-yellow-100 flex items-center justify-center flex-shrink-0">
+                <svg class="w-5 h-5 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z"/></svg>
+              </div>
+              <div class="flex-1 min-w-0">
+                <p class="text-sm font-medium text-marca-900">Motoristas pendentes de aprovação</p>
+                <p class="text-xs text-gray-500">7 aguardando validação de documentos</p>
+              </div>
+              <span class="badge bg-yellow-100 text-yellow-700 text-xs font-medium px-2 py-1 rounded-full">7</span>
+              <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            </div>
+          </div>
+          <div class="card p-3 border-l-4 border-l-red-400 bg-red-50/50 cursor-pointer hover:bg-red-50 transition" onclick="abrirModal(painel_admin_modalSuportesAbertos(), 'Suportes Abertos')">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center flex-shrink-0">
+                <svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/></svg>
+              </div>
+              <div class="flex-1 min-w-0">
+                <p class="text-sm font-medium text-marca-900">Suportes abertos</p>
+                <p class="text-xs text-gray-500">3 chamados aguardando resposta</p>
+              </div>
+              <span class="badge bg-red-100 text-red-700 text-xs font-medium px-2 py-1 rounded-full">3</span>
+              <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- Filtros + Tabela de corridas recentes -->
+        <div class="card overflow-hidden">
+          <div class="p-4 border-b border-gray-100">
+            <div class="flex items-center justify-between mb-3">
+              <h2 class="text-sm font-display font-semibold text-marca-900">Corridas recentes</h2>
+              <button onclick="painel_admin_toggleFiltros()" id="btn-toggle-filtros" class="text-xs text-marca-600 flex items-center gap-1 hover:text-marca-700 transition">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/></svg>
+                Filtros
+              </button>
+            </div>
+            <!-- Filtros colapsáveis -->
+            <div id="filtros-painel" class="hidden space-y-3">
+              <div class="flex gap-2">
+                <div class="flex-1">
+                  <label class="text-xs text-gray-500 block mb-1">Data inicial</label>
+                  <input type="date" id="filtro-data-ini" value="2025-01-13" onchange="painel_admin_aplicarFiltros()" class="w-full text-sm border border-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-marca-500/20 focus:border-marca-400 transition">
+                </div>
+                <div class="flex-1">
+                  <label class="text-xs text-gray-500 block mb-1">Data final</label>
+                  <input type="date" id="filtro-data-fim" value="2025-01-20" onchange="painel_admin_aplicarFiltros()" class="w-full text-sm border border-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-marca-500/20 focus:border-marca-400 transition">
+                </div>
+              </div>
+              <div>
+                <label class="text-xs text-gray-500 block mb-1">Região</label>
+                <select id="filtro-regiao" onchange="painel_admin_aplicarFiltros()" class="w-full text-sm border border-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-marca-500/20 focus:border-marca-400 transition bg-white">
+                  <option value="">Todas as regiões</option>
+                  <option value="zona-sul">Zona Sul</option>
+                  <option value="zona-norte">Zona Norte</option>
+                  <option value="zona-leste">Zona Leste</option>
+                  <option value="zona-oeste">Zona Oeste</option>
+                  <option value="centro">Centro</option>
+                </select>
+              </div>
+              <div>
+                <label class="text-xs text-gray-500 block mb-1">Status</label>
+                <select id="filtro-status" onchange="painel_admin_aplicarFiltros()" class="w-full text-sm border border-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-marca-500/20 focus:border-marca-400 transition bg-white">
+                  <option value="">Todos</option>
+                  <option value="concluida">Concluída</option>
+                  <option value="em-andamento">Em andamento</option>
+                  <option value="cancelada">Cancelada</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <!-- Tabela -->
+          <div class="overflow-x-auto">
+            <table class="w-full text-xs">
+              <thead>
+                <tr class="bg-gray-50/80 text-gray-500">
+                  <th class="text-left py-2.5 px-3 font-medium">Passageiro</th>
+                  <th class="text-left py-2.5 px-3 font-medium">Motorista</th>
+                  <th class="text-right py-2.5 px-3 font-medium">Valor</th>
+                  <th class="text-right py-2.5 px-3 font-medium">Distância</th>
+                  <th class="text-center py-2.5 px-3 font-medium">Status</th>
+                  <th class="text-center py-2.5 px-3 font-medium"></th>
+                </tr>
+              </thead>
+              <tbody id="tabela-corridas-body">
+              </tbody>
+            </table>
+          </div>
+          <div id="tabela-vazia" class="hidden p-8 text-center">
+            <svg class="w-10 h-10 mx-auto text-gray-300 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            <p class="text-sm text-gray-400">Nenhuma corrida encontrada</p>
+            <p class="text-xs text-gray-400 mt-0.5">Tente ajustar os filtros</p>
+          </div>
+        </div>
+
+        <!-- Botões de ação rápida -->
+        <div class="grid grid-cols-2 gap-3 pb-4">
+          <button onclick="mostrarTela('painel-motorista')" class="card p-4 text-center hover:border-marca-400 transition cursor-pointer active:scale-95">
+            <div class="w-11 h-11 rounded-full bg-marca-50 flex items-center justify-center mx-auto mb-2">
+              <svg class="w-5 h-5 text-marca-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+            </div>
+            <p class="text-sm font-medium text-marca-900">Gerenciar Motoristas</p>
+            <p class="text-xs text-gray-400 mt-0.5">142 cadastrados</p>
+          </button>
+          <button onclick="mostrarTela('home-passageiro')" class="card p-4 text-center hover:border-marca-400 transition cursor-pointer active:scale-95">
+            <div class="w-11 h-11 rounded-full bg-purple-50 flex items-center justify-center mx-auto mb-2">
+              <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+            </div>
+            <p class="text-sm font-medium text-marca-900">Gerenciar Passageiros</p>
+            <p class="text-xs text-gray-400 mt-0.5">3.291 cadastrados</p>
+          </button>
+        </div>
+      </div>
+
+      <script>
+        // Dados de exemplo para corridas
+        const painel_admin_corridas = [
+          { id: 1, passageiro: 'Carlos Eduardo Silva', motorista: 'Roberto Mendes', origem: 'Av. Paulista, 1500', destino: 'Rua Augusta, 800', valor: 23.50, distancia: '8,2 km', status: 'concluida', data: '2025-01-20T14:32:00', regiao: 'zona-sul', avatarP: 'CS', avatarM: 'RM' },
+          { id: 2, passageiro: 'Fernanda Oliveira', motorista: 'João Pedro Santos', origem: 'Pinheiros, 220', destino: 'Morumbi Shopping', valor: 15.00, distancia: '5,1 km', status: 'concluida', data: '2025-01-20T13:15:00', regiao: 'zona-oeste', avatarP: 'FO', avatarM: 'JS' },
+          { id: 3, passageiro: 'Ricardo Almeida', motorista: 'Paulo Henrique', origem: 'Barra Funda, 900', destino: 'Consolação, 400', valor: 42.00, distancia: '18,5 km', status: 'concluida', data: '2025-01-20T11:48:00', regiao: 'centro', avatarP: 'RA', avatarM: 'PH' },
+          { id: 4, passageiro: 'Mariana Costa', motorista: 'André Luiz', origem: 'Vila Mariana, 300', destino: 'Brooklin, 1200', valor: 10.00, distancia: '3,4 km', status: 'concluida', data: '2025-01-20T10:05:00', regiao: 'zona-sul', avatarP: 'MC', avatarM: 'AL' },
+          { id: 5, passageiro: 'Lucas Pereira', motorista: 'Roberto Mendes', origem: 'Santana, 500', destino: 'Tucuruvi, 200', valor: 55.00, distancia: '24,0 km', status: 'concluida', data: '2025-01-19T22:10:00', regiao: 'zona-norte', avatarP: 'LP', avatarM: 'RM' },
+          { id: 6, passageiro: 'Ana Beatriz Souza', motorista: 'Carlos Miguel', origem: 'Moema, 700', destino: 'Itaim Bibi, 150', valor: 31.00, distancia: '12,3 km', status: 'concluida', data: '2025-01-19T18:45:00', regiao: 'zona-sul', avatarP: 'AS', avatarM: 'CM' },
+          { id: 7, passageiro: 'Pedro Henrique Lima', motorista: 'João Pedro Santos', origem: 'Lapa, 300', destino: 'Perdizes, 800', valor: 12.50, distancia: '4,7 km', status: 'cancelada', data: '2025-01-19T16:20:00', regiao: 'zona-oeste', avatarP: 'PL', avatarM: 'JS' },
+          { id: 8, passageiro: 'Juliana Ferreira', motorista: 'Paulo Henrique', origem: 'Mooca, 200', destino: 'Tatuapé, 1000', valor: 19.00, distancia: '7,1 km', status: 'em-andamento', data: '2025-01-20T15:05:00', regiao: 'zona-leste', avatarP: 'JF', avatarM: 'PH' },
+        ];
+
+        const painel_admin_coresAvatar = ['bg-marca-600','bg-emerald-500','bg-amber-500','bg-rose-500','bg-violet-500','bg-cyan-500','bg-orange-500','bg-teal-600'];
+        const painel_admin_corTexto = ['text-white'];
+
+        function painel_admin_corAvatar(idx) {
+          return painel_admin_coresAvatar[idx % painel_admin_coresAvatar.length];
+        }
+
+        function painel_admin_badgeStatus(status) {
+          const map = {
+            'concluida': '<span class="badge bg-green-100 text-green-700">Concluída</span>',
+            'em-andamento': '<span class="badge bg-blue-100 text-blue-700">Em andamento</span>',
+            'cancelada': '<span class="badge bg-red-100 text-red-700">Cancelada</span>',
+          };
+          return map[status] || '<span class="badge bg-gray-100 text-gray-600">' + status + '</span>';
+        }
+
+        function painel_admin_renderTabela(corridas) {
+          const tbody = document.getElementById('tabela-corridas-body');
+          const vazia = document.getElementById('tabela-vazia');
+          tbody.innerHTML = '';
+          if (corridas.length === 0) {
+            vazia.classList.remove('hidden');
+            return;
+          }
+          vazia.classList.add('hidden');
+          corridas.forEach((c, i) => {
+            const tr = document.createElement('tr');
+            tr.className = 'border-t border-gray-50 hover:bg-gray-50/50 transition cursor-pointer';
+            tr.onclick = function() { painel_admin_detalheCorrida(c); };
+            tr.innerHTML = `
+              <td class="py-2.5 px-3">
+                <div class="flex items-center gap-2">
+                  <div class="w-7 h-7 rounded-full ${painel_admin_corAvatar(i*2)} flex items-center justify-center text-white text-[10px] font-bold flex-shrink-0">${c.avatarP}</div>
+                  <div class="min-w-0">
+                    <p class="font-medium text-marca-900 truncate">${c.passageiro}</p>
+                    <p class="text-gray-400 truncate">${c.origem.split(',')[0]}</p>
+                  </div>
+                </div>
+              </td>
+              <td class="py-2.5 px-3">
+                <div class="flex items-center gap-2">
+                  <div class="w-7 h-7 rounded-full ${painel_admin_corAvatar(i*2+1)} flex items-center justify-center text-white text-[10px] font-bold flex-shrink-0">${c.avatarM}</div>
+                  <span class="text-gray-600 truncate">${c.motorista}</span>
+                </div>
+              </td>
+              <td class="py-2.5 px-3 text-right font-medium text-marca-900">${brl(c.valor)}</td>
+              <td class="py-2.5 px-3 text-right text-gray-500">${c.distancia}</td>
+              <td class="py-2.5 px-3 text-center">${painel_admin_badgeStatus(c.status)}</td>
+              <td class="py-2.5 px-3 text-center">
+                <svg class="w-4 h-4 text-gray-300 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+              </td>`;
+            tbody.appendChild(tr);
+          });
+        }
+
+        function painel_admin_detalheCorrida(c) {
+          const taxa = c.valor * 0.20;
+          const valorMotorista = c.valor - taxa;
+          const html = `
+            <div class="space-y-4">
+              <div class="flex items-center gap-3">
+                <div class="flex -space-x-2">
+                  <div class="w-9 h-9 rounded-full ${painel_admin_corAvatar(0)} flex items-center justify-center text-white text-xs font-bold ring-2 ring-white">${c.avatarP}</div>
+                  <div class="w-9 h-9 rounded-full ${painel_admin_corAvatar(1)} flex items-center justify-center text-white text-xs font-bold ring-2 ring-white">${c.avatarM}</div>
+                </div>
+                <div>
+                  <p class="text-sm font-medium text-marca-900">${c.passageiro} &rarr; ${c.motorista}</p>
+                  <p class="text-xs text-gray-400">${dataBR(c.data)}</p>
+                </div>
+              </div>
+              <div class="card p-3 bg-gray-50 space-y-2">
+                <div class="flex items-start gap-2">
+                  <div class="w-5 h-5 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0 mt-0.5"><svg class="w-3 h-3 text-green-600" fill="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/></svg></div>
+                  <div><p class="text-xs text-gray-400">Origem</p><p class="text-sm text-marca-900">${c.origem}</p></div>
+                </div>
+                <div class="border-l-2 border-dashed border-gray-300 ml-2.5 h-3"></div>
+                <div class="flex items-start gap-2">
+                  <div class="w-5 h-5 rounded-full bg-red-100 flex items-center justify-center flex-shrink-0 mt-0.5"><svg class="w-3 h-3 text-red-600" fill="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/></svg></div>
+                  <div><p class="text-xs text-gray-400">Destino</p><p class="text-sm text-marca-900">${c.destino}</p></div>
+                </div>
+              </div>
+              <div class="grid grid-cols-3 gap-2">
+                <div class="card p-3 text-center"><p class="text-lg font-display font-bold text-marca-900">${brl(c.valor)}</p><p class="text-[10px] text-gray-400">Valor total</p></div>
+                <div class="card p-3 text-center"><p class="text-lg font-display font-bold text-green-600">${brl(taxa)}</p><p class="text-[10px] text-gray-400">Taxa (20%)</p></div>
+                <div class="card p-3 text-center"><p class="text-lg font-display font-bold text-marca-900">${c.distancia}</p><p class="text-[10px] text-gray-400">Distância</p></div>
+              </div>
+              ${painel_admin_badgeStatus(c.status)}
+              <div class="flex gap-2 pt-1">
+                <button onclick="toast('Relatório de corrida #${c.id} enviado por e-mail','ok');fecharModal()" class="btn btn-primary flex-1 text-sm py-2.5 active:scale-95 transition">Exportar comprovante</button>
+                <button onclick="fecharModal()" class="btn flex-1 text-sm py-2.5 active:scale-95 transition">Fechar</button>
+              </div>
+            </div>`;
+          abrirModal(html, 'Detalhe da Corrida #' + String(c.id).padStart(4,'0'));
+        }
+
+        function painel_admin_aplicarFiltros() {
+          const regiao = document.getElementById('filtro-regiao').value;
+          const status = document.getElementById('filtro-status').value;
+          const dataIni = document.getElementById('filtro-data-ini').value;
+          const dataFim = document.getElementById('filtro-data-fim').value;
+          let filtradas = painel_admin_corridas;
+          if (regiao) filtradas = filtradas.filter(c => c.regiao === regiao);
+          if (status) filtradas = filtradas.filter(c => c.status === status);
+          if (dataIni) filtradas = filtradas.filter(c => c.data >= dataIni);
+          if (dataFim) filtradas = filtradas.filter(c => c.data <= dataFim + 'T23:59:59');
+          painel_admin_renderTabela(filtradas);
+        }
+
+        function painel_admin_toggleFiltros() {
+          const panel = document.getElementById('filtros-painel');
+          panel.classList.toggle('hidden');
+        }
+
+        function painel_admin_setPeriodo(p) {
+          const btnSemana = document.getElementById('btn-periodo-semana');
+          const btnMes = document.getElementById('btn-periodo-mes');
+          if (p === 'semana') {
+            btnSemana.className = 'text-xs px-2.5 py-1 rounded-md bg-marca-600 text-white transition';
+            btnMes.className = 'text-xs px-2.5 py-1 rounded-md bg-gray-100 text-gray-600 hover:bg-gray-200 transition';
+            painel_admin_desenharGrafico('semana');
+          } else {
+            btnMes.className = 'text-xs px-2.5 py-1 rounded-md bg-marca-600 text-white transition';
+            btnSemana.className = 'text-xs px-2.5 py-1 rounded-md bg-gray-100 text-gray-600 hover:bg-gray-200 transition';
+            painel_admin_desenharGrafico('mes');
+          }
+        }
+
+        function painel_admin_desenharGrafico(periodo) {
+          const svgLabels = document.getElementById('grafico-labels');
+          const svgPontos = document.getElementById('grafico-pontos');
+          const linhaEl = document.getElementById('grafico-linha');
+          const areaEl = document.getElementById('grafico-area');
+          svgLabels.innerHTML = '';
+          svgPontos.innerHTML = '';
+          let dados, labels;
+          if (periodo === 'semana') {
+            dados = [142, 178, 165, 198, 210, 185, 156];
+            labels = ['Seg','Ter','Qua','Qui','Sex','Sáb','Dom'];
+          } else {
+            dados = [120,145,132,168,175,155,190,210,195,180,220,240,235,200,215,250,230,260,245,270,255,280,265,290,275,300,285,310,295,320];
+            labels = [];
+            for (let i = 1; i <= 30; i += 3) labels.push(i + '');
+          }
+          const max = Math.max(...dados);
+          const w = 340, h = 140, padL = 40, padR = 10, padT = 10, padB = 15;
+          const chartW = w - padL - padR;
+          const chartH = h - padT - padB;
+          let pathD = '';
+          let areaD = 'M' + padL + ',' + (h - padB);
+          const stepX = chartW / (dados.length - 1);
+          dados.forEach((v, i) => {
+            const x = padL + i * stepX;
+            const y = padT + chartH - (v / max) * chartH;
+            if (i === 0) { pathD += 'M' + x + ',' + y; areaD += ' L' + x + ',' + y; }
+            else { pathD += ' L' + x + ',' + y; areaD += ' L' + x + ',' + y; }
+            const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+            circle.setAttribute('cx', x);
+            circle.setAttribute('cy', y);
+            circle.setAttribute('r', '3.5');
+            circle.setAttribute('fill', '#2563EB');
+            circle.setAttribute('stroke', '#fff');
+            circle.setAttribute('stroke-width', '2');
+            circle.style.cursor = 'pointer';
+            circle.addEventListener('mouseenter', function() {
+              const txt = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+              txt.setAttribute('x', x);
+              txt.setAttribute('y', y - 10);
+              txt.setAttribute('text-anchor', 'middle');
+              txt.setAttribute('class', 'text-[10px] fill-marca-900 font-bold');
+              txt.textContent = v;
+              txt.id = 'tooltip-grafico';
+              svgPontos.appendChild(txt);
+            });
+            circle.addEventListener('mouseleave', function() {
+              const t = document.getElementById('tooltip-grafico');
+              if (t) t.remove();
+            });
+            svgPontos.appendChild(circle);
+          });
+          areaD += ' L' + (padL + (dados.length-1)*stepX) + ',' + (h - padB) + ' Z';
+          linhaEl.setAttribute('d', pathD);
+          areaEl.setAttribute('d', areaD);
+          const labelStep = Math.max(1, Math.floor(labels.length / 7));
+          labels.forEach((l, i) => {
+            if (i % labelStep === 0) {
+              const x = padL + i * stepX;
+              const txt = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+              txt.setAttribute('x', x);
+              txt.setAttribute('y', h - 2);
+              txt.setAttribute('text-anchor', 'middle');
+              txt.setAttribute('class', 'text-[9px] fill-gray-400');
+              txt.textContent = l;
+              svgLabels.appendChild(txt);
+            }
+          });
+        }
+
+        function painel_admin_detalheKPI(tipo) {
+          const map = {
+            'corridas': { titulo: 'Corridas no Período', valor: '1.847 corridas', detalhe: 'Média diária: 264 corridas. Pico: 310 corridas (17/01).' },
+            'receita': { titulo: 'Receita Total de Taxas', valor: 'R$ 28.471,50', detalhe: 'Ticket médio por corrida: R$ 15,42. Projeção mensal: R$ 38.200,00.' },
+            'motoristas': { titulo: 'Motoristas Ativos', valor: '142 motoristas', detalhe: '7 pendentes de aprovação. 23 online agora. Taxa de aprovação: 95%.' },
+            'passageiros': { titulo: 'Passageiros Ativos', valor: '3.291 passageiros', detalhe: 'Novos esta semana: +87. Taxa de recompra: 68%. NPS: 8,4/10.' },
+          };
+          const info = map[tipo];
+          abrirModal('<div class=space-y-3><p class=text-3xl font-display font-bold text-marca-900>' + info.valor + '</p><p class=text-sm text-gray-600>' + info.detalhe + '</p><button onclick=fecharModal() class=btn btn-primary w-full text-sm py-2.5 active:scale-95 transition>Entendi</button></div>', info.titulo);
+        }
+
+        function painel_admin_modalMotoristasPendentes() {
+          const motoristas = [
+            { nome: 'José Carlos Pereira', doc: 'CNH vencida', data: '2025-01-19', cor: 'bg-amber-500', ini: 'JP' },
+            { nome: 'Márcio Andrade', doc: 'CRLV pendente', data: '2025-01-18', cor: 'bg-rose-500', ini: 'MA' },
+            { nome: 'Thiago Rocha', doc: 'Antecedentes pendentes', data: '2025-01-18', cor: 'bg-violet-500', ini: 'TR' },
+            { nome: 'Fábio Nascimento', doc: 'Foto do veículo', data: '2025-01-17', cor: 'bg-teal-500', ini: 'FN' },
+            { nome: 'Wagner Dias', doc: 'CNH vencida', data: '2025-01-17', cor: 'bg-cyan-500', ini: 'WD' },
+            { nome: 'Diego Costa', doc: 'Comprovante residência', data: '2025-01-16', cor: 'bg-orange-500', ini: 'DC' },
+            { nome: 'Alexandre Lima', doc: 'CRLV pendente', data: '2025-01-16', cor: 'bg-emerald-500', ini: 'AL' },
+          ];
+          let list = '<div class=space-y-2>';
+          motoristas.forEach(m => {
+            list += '<div class="flex items-center gap-3 p-2.5 bg-gray-50 rounded-lg"><div class="w-8 h-8 rounded-full ' + m.cor + ' flex items-center justify-center text-white text-xs font-bold flex-shrink-0">' + m.ini + '</div><div class="flex-1 min-w-0"><p class="text-sm font-medium text-marca-900 truncate">' + m.nome + '</p><p class="text-xs text-red-500">' + m.doc + '</p></div><span class="text-[10px] text-gray-400 flex-shrink-0">' + dataBR(m.data) + '</span></div>';
+          });
+          list += '</div>';
+          list += '<div class="flex gap-2 pt-2"><button onclick=toast(\'Aprovação em massa enviada para validação\',\'ok\');fecharModal() class="btn btn-primary flex-1 text-sm py-2.5 active:scale-95 transition">Aprovar Selecionados</button><button onclick=fecharModal() class="btn flex-1 text-sm py-2.5 active:scale-95 transition">Fechar</button></div>';
+          return list;
+        }
+
+        function painel_admin_modalSuportesAbertos() {
+          const suportes = [
+            { id: 'SUP-0142', usuario: 'Fernanda Oliveira', tipo: 'Problema com pagamento', prioridade: 'alta', data: '2025-01-20T10:30:00' },
+            { id: 'SUP-0141', usuario: 'Roberto Mendes', tipo: 'Corrida cancelada indevidamente', prioridade: 'media', data: '2025-01-20T09:15:00' },
+            { id: 'SUP-0140', usuario: 'Ricardo Almeida', tipo: 'Dúvida sobre tarifa', prioridade: 'baixa', data: '2025-01-19T18:45:00' },
+          ];
+          let list = '<div class=space-y-2>';
+          suportes.forEach(s => {
+            const corPrior = s.prioridade === 'alta' ? 'bg-red-100 text-red-700' : s.prioridade === 'media' ? 'bg-yellow-100 text-yellow-700' : 'bg-green-100 text-green-700';
+            list += '<div class="p-3 bg-gray-50 rounded-lg cursor-pointer hover:bg-gray-100 transition" onclick=toast(\'Respondendo ao chamado ' + s.id + '\',\'info\')><div class="flex items-center justify-between mb-1"><span class="text-xs font-mono text-gray-400">' + s.id + '</span><span class="text-[10px] ' + corPrior + ' px-1.5 py-0.5 rounded-full font-medium">' + s.prioridade + '</span></div><p class="text-sm font-medium text-marca-900">' + s.usuario + '</p><p class="text-xs text-gray-500">' + s.tipo + '</p><p class="text-[10px] text-gray-400 mt-1">' + dataBR(s.data) + '</p></div>';
+          });
+          list += '</div>';
+          list += '<button onclick=fecharModal() class="btn w-full text-sm py-2.5 active:scale-95 transition mt-3">Fechar</button>';
+          return list;
+        }
+
+        function painel_admin_exportar(formato) {
+          toast('Relatório exportado em ' + formato.toUpperCase() + ' com sucesso!', 'ok');
+        }
+
+        // Inicialização
+        painel_admin_renderTabela(painel_admin_corridas);
+        painel_admin_desenharGrafico('semana');
+      </script>
+    </section>
+
     <!-- TELAS -->
 
     </main>
