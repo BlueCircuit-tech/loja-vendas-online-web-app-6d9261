@@ -137,7 +137,619 @@
       <!-- ═══════════════════════════════════════════ -->
       <!-- TELAS – cada tela será injetada aqui        -->
       <!-- ═══════════════════════════════════════════ -->
-      <!-- TELAS -->
+      <section data-tela="home-passageiro" class="hidden">
+      <!-- Overlay do menu lateral -->
+      <div id="overlay-menu" class="fixed inset-0 bg-black/50 z-40 hidden transition-opacity duration-300" onclick="home_passageiro_fecharMenu()"></div>
+      <!-- Sidebar -->
+      <aside id="sidebar-menu" class="fixed top-0 left-0 h-full w-72 bg-white z-50 transform -translate-x-full transition-transform duration-300 shadow-2xl flex flex-col">
+        <div class="bg-marca-800 p-6 text-white">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-12 h-12 rounded-full bg-marca-600 flex items-center justify-center font-display text-lg font-bold">JM</div>
+            <div>
+              <p class="font-display font-bold text-base">João Mendes</p>
+              <p class="text-xs text-marca-200">joao.mendes@email.com</p>
+            </div>
+          </div>
+          <p class="text-xs text-marca-300 mt-2">Passageiro desde jan/2025</p>
+        </div>
+        <nav class="flex-1 p-4 space-y-1 overflow-y-auto">
+          <button onclick="home_passageiro_abrirPerfil()" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-left hover:bg-marca-50 transition-colors">
+            <svg class="w-5 h-5 text-marca-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/></svg>
+            <span class="text-sm font-medium text-marca-900">Meu Perfil</span>
+          </button>
+          <button onclick="mostrarTela('acompanhar-corrida')" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-left hover:bg-marca-50 transition-colors">
+            <svg class="w-5 h-5 text-marca-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 00-3.213-9.193 2.056 2.056 0 00-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 00-10.026 0 1.106 1.106 0 00-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12"/></svg>
+            <span class="text-sm font-medium text-marca-900">Corridas Ativas</span>
+          </button>
+          <button onclick="home_passageiro_abrirHistorico()" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-left hover:bg-marca-50 transition-colors">
+            <svg class="w-5 h-5 text-marca-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            <span class="text-sm font-medium text-marca-900">Histórico de Corridas</span>
+          </button>
+          <button onclick="mostrarTela('pagamento')" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-left hover:bg-marca-50 transition-colors">
+            <svg class="w-5 h-5 text-marca-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3 2.25h3m-9.75-6h16.5a2.25 2.25 0 012.25 2.25v10.5a2.25 2.25 0 01-2.25 2.25H3.75a2.25 2.25 0 01-2.25-2.25V6.75a2.25 2.25 0 012.25-2.25z"/></svg>
+            <span class="text-sm font-medium text-marca-900">Formas de Pagamento</span>
+          </button>
+          <button onclick="home_passageiro_abrirPromocoes()" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-left hover:bg-marca-50 transition-colors">
+            <svg class="w-5 h-5 text-marca-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 005.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 009.568 3z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 6h.008v.008H6V6z"/></svg>
+            <span class="text-sm font-medium text-marca-900">Promoções</span>
+          </button>
+          <button onclick="mostrarTela('notificacoes')" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-left hover:bg-marca-50 transition-colors">
+            <svg class="w-5 h-5 text-marca-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0"/></svg>
+            <span class="text-sm font-medium text-marca-900">Notificações</span>
+            <span class="ml-auto bg-marca-700 text-white text-xs rounded-full px-2 py-0.5 font-medium">3</span>
+          </button>
+          <div class="border-t border-gray-200 my-3"></div>
+          <button onclick="mostrarTela('painel-admin')" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-left hover:bg-gray-50 transition-colors">
+            <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15.75 5.25a3 3 0 013 3m3 0a6 6 0 01-7.029 5.74c-.62-.13-1.23-.41-1.79-.87a9.683 9.683 0 01-3.74-5.877A3 3 0 016 12H3.75a.75.75 0 01-.75-.75v-4.5a.75.75 0 01.75-.75h15a.75.75 0 01.75.75v4.5a.75.75 0 01-.75.75H18a3 3 0 01-2.25-2.875z"/></svg>
+            <span class="text-sm font-medium text-gray-500">Painel Admin</span>
+          </button>
+        </nav>
+        <div class="p-4 border-t border-gray-200">
+          <button onclick="home_passageiro_sair()" class="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-red-50 text-red-600 hover:bg-red-100 transition-colors">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9"/></svg>
+            <span class="text-sm font-medium">Sair</span>
+          </button>
+        </div>
+      </aside>
+
+      <!-- Mapa simulado -->
+      <div class="relative h-[320px] bg-marca-50 overflow-hidden">
+        <svg class="w-full h-full" viewBox="0 0 375 320">
+          <defs>
+            <pattern id="ruas" patternUnits="userSpaceOnUse" width="40" height="40">
+              <rect width="40" height="40" fill="#E8EDF3"/>
+              <rect x="0" y="0" width="12" height="40" fill="#F0F4F8" rx="0"/>
+              <rect x="0" y="0" width="40" height="12" fill="#F0F4F8" rx="0"/>
+            </pattern>
+          </defs>
+          <rect width="375" height="320" fill="url(#ruas)"/>
+          <rect x="50" y="20" width="8" height="280" fill="#F8FAFC" rx="0"/>
+          <rect x="130" y="20" width="8" height="280" fill="#F8FAFC" rx="0"/>
+          <rect x="210" y="20" width="8" height="280" fill="#F8FAFC" rx="0"/>
+          <rect x="290" y="20" width="8" height="280" fill="#F8FAFC" rx="0"/>
+          <rect x="0" y="80" width="375" height="8" fill="#F8FAFC" rx="0"/>
+          <rect x="0" y="160" width="375" height="8" fill="#F8FAFC" rx="0"/>
+          <rect x="0" y="240" width="375" height="8" fill="#F8FAFC" rx="0"/>
+          <rect x="80" y="0" width="6" height="320" fill="#DDE4ED" rx="0"/>
+          <rect x="170" y="0" width="6" height="320" fill="#DDE4ED" rx="0"/>
+          <rect x="255" y="0" width="6" height="320" fill="#DDE4ED" rx="0"/>
+          <rect x="340" y="0" width="6" height="320" fill="#DDE4ED" rx="0"/>
+          <rect x="0" y="120" width="375" height="4" fill="#DDE4ED" rx="0"/>
+          <rect x="0" y="200" width="375" height="4" fill="#DDE4ED" rx="0"/>
+        </svg>
+        <!-- Botão de localização -->
+        <button onclick="home_passageiro_centralizar()" class="absolute top-3 right-3 w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center hover:bg-gray-50 active:scale-95 transition-all z-10">
+          <svg class="w-5 h-5 text-marca-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 21a9 9 0 100-18 9 9 0 000 18zm0 0a8.949 8.949 0 003.87-1.568 9.002 9.002 0 00-7.74-7.74A8.949 8.949 0 0012 21z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 12.75a2.25 2.25 0 100-4.5 2.25 2.25 0 000 4.5z"/></svg>
+        </button>
+        <!-- Indicador de localização -->
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
+          <div class="relative">
+            <div class="w-5 h-5 bg-marca-700 rounded-full border-4 border-white shadow-lg"></div>
+            <div class="absolute -top-1 -left-1 w-7 h-7 bg-marca-700/20 rounded-full animate-ping"></div>
+          </div>
+        </div>
+        <!-- Motoristas disponíveis -->
+        <div class="absolute top-20 left-4 z-10 animate-bounce" style="animation-duration:3s">
+          <div class="w-8 h-8 bg-yellow-400 rounded-full flex items-center justify-center shadow-lg border-2 border-white">
+            <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg>
+          </div>
+        </div>
+        <div class="absolute top-28 right-8 z-10 animate-bounce" style="animation-duration:4s">
+          <div class="w-8 h-8 bg-yellow-400 rounded-full flex items-center justify-center shadow-lg border-2 border-white">
+            <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg>
+          </div>
+        </div>
+        <div class="absolute bottom-28 left-12 z-10 animate-bounce" style="animation-duration:3.5s">
+          <div class="w-8 h-8 bg-yellow-400 rounded-full flex items-center justify-center shadow-lg border-2 border-white">
+            <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg>
+          </div>
+        </div>
+        <div class="absolute top-40 left-1/2 z-10 animate-bounce" style="animation-duration:4.5s">
+          <div class="w-8 h-8 bg-yellow-400 rounded-full flex items-center justify-center shadow-lg border-2 border-white">
+            <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg>
+          </div>
+        </div>
+        <div class="absolute top-16 right-20 z-10 animate-bounce" style="animation-duration:2.8s">
+          <div class="w-8 h-8 bg-yellow-400 rounded-full flex items-center justify-center shadow-lg border-2 border-white">
+            <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg>
+          </div>
+        </div>
+        <!-- Placa de rua -->
+        <div class="absolute bottom-16 left-1/2 -translate-x-1/2 z-10">
+          <div class="bg-white/90 backdrop-blur-sm rounded-lg px-3 py-1 shadow-md">
+            <p class="text-xs font-medium text-marca-900">Av. Paulista, 1500</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Conteúdo -->
+      <div class="bg-white -mt-5 rounded-t-3xl relative z-10 min-h-[420px]">
+        <!-- Barra de pesquisa de destino -->
+        <div class="px-5 pt-5 pb-2">
+          <div class="relative">
+            <button onclick="home_passageiro_abrirMenu()" class="absolute -left-2 -top-1 w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 active:scale-95 transition-all">
+              <svg class="w-6 h-6 text-marca-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/></svg>
+            </button>
+            <div class="bg-gray-100 rounded-2xl px-4 py-3.5 pl-10">
+              <div class="flex items-center gap-2 mb-1">
+                <div class="w-2.5 h-2.5 rounded-full bg-marca-700 shrink-0"></div>
+                <p id="destino-texto" class="text-sm font-medium text-marca-900">Para onde você vai?</p>
+              </div>
+              <div class="flex items-center gap-2">
+                <div class="w-2.5 h-2.5 rounded-full bg-green-500 shrink-0"></div>
+                <p class="text-xs text-gray-500">Av. Paulista, 1578 — Bela Vista, SP</p>
+              </div>
+            </div>
+            <button onclick="home_passageiro_buscarDestino()" class="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 bg-marca-700 rounded-full flex items-center justify-center hover:bg-marca-800 active:scale-95 transition-all">
+              <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/></svg>
+            </button>
+          </div>
+          <!-- Pontos salvos -->
+          <div class="flex gap-2 mt-3 overflow-x-auto pb-1 scrollbar-hide">
+            <button onclick="home_passageiro_irPara('Casa', 'Rua das Palmeiras, 42, Jardins')" class="flex items-center gap-1.5 bg-marca-50 border border-marca-200 rounded-full px-3 py-1.5 shrink-0 hover:bg-marca-100 active:scale-95 transition-all">
+              <svg class="w-3.5 h-3.5 text-marca-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h7.5"/></svg>
+              <span class="text-xs font-medium text-marca-800">Casa</span>
+            </button>
+            <button onclick="home_passageiro_irPara('Trabalho', 'Av. Paulista, 1578, Bela Vista')" class="flex items-center gap-1.5 bg-gray-50 border border-gray-200 rounded-full px-3 py-1.5 shrink-0 hover:bg-gray-100 active:scale-95 transition-all">
+              <svg class="w-3.5 h-3.5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.25 14.15v4.25c0 1.094-.787 2.036-1.872 2.18-2.087.3-4.245.458-6.378.458a59.38 59.38 0 01-6.378-.458c-1.085-.144-1.872-1.086-1.872-2.18v-4.25m16.5 0a2.18 2.18 0 00.75-1.661V8.706c0-1.081-.768-2.015-1.837-2.175a48.114 48.114 0 00-3.413-.387m4.5 8.006c-.194.165-.42.295-.673.38A23.978 23.978 0 0112 16.5c-3.18 0-6.24-.47-8.987-1.322a2.25 2.25 0 01-.673-.38m0 0A2.18 2.18 0 013 12.489V8.706c0-1.081.768-2.015 1.837-2.175a48.111 48.111 0 013.413-.387m7.5 0V5.25A2.25 2.25 0 0016.5 3h-9a2.25 2.25 0 00-2.25 2.25v9.75a2.25 2.25 0 002.25 2.25h9a2.25 2.25 0 002.25-2.25v-1.5"/></svg>
+              <span class="text-xs font-medium text-gray-700">Trabalho</span>
+            </button>
+            <button onclick="home_passageiro_irPara('Academia', 'Rua Augusta, 500, Consolação')" class="flex items-center gap-1.5 bg-gray-50 border border-gray-200 rounded-full px-3 py-1.5 shrink-0 hover:bg-gray-100 active:scale-95 transition-all">
+              <svg class="w-3.5 h-3.5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.362 5.214A8.252 8.252 0 0112 21.75a8.25 8.25 0 01-6.022-7.088m14.044 0a8.234 8.234 0 00-2.022-1.088M12 21.75V3.75m0 0l-2.466 2.466m2.466-2.466L14.466 6.216"/></svg>
+              <span class="text-xs font-medium text-gray-700">Academia</span>
+            </button>
+            <button onclick="home_passageiro_irPara('Shopping', 'Shopping Iguatemi, Vila Nova')" class="flex items-center gap-1.5 bg-gray-50 border border-gray-200 rounded-full px-3 py-1.5 shrink-0 hover:bg-gray-100 active:scale-95 transition-all">
+              <svg class="w-3.5 h-3.5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h11.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11.75 0 .375.375 0 01-.75 0zm9.75 0a.375.375 0 11.75 0 .375.375 0 01-.75 0z"/></svg>
+              <span class="text-xs font-medium text-gray-700">Shopping</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Badge de transparência -->
+        <div class="px-5 mt-3">
+          <div class="bg-green-50 border border-green-200 rounded-xl px-4 py-2.5 flex items-center gap-2">
+            <svg class="w-4 h-4 text-green-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"/></svg>
+            <span class="text-xs text-green-800 font-medium">Taxa de plataforma de R$ 3,00 inclusa. Sem surpresas.</span>
+          </div>
+        </div>
+
+        <!-- Opções de veículo -->
+        <div class="px-5 mt-4">
+          <div class="flex items-center justify-between mb-3">
+            <h3 class="text-sm font-display font-bold text-marca-900">Escolha o veículo</h3>
+            <span class="text-xs text-gray-500">5 motoristas próximos</span>
+          </div>
+          <div id="lista-veiculos" class="space-y-3">
+            <!-- Veículo selecionado -->
+            <button onclick="home_passageiro_selecionarVeiculo(0)" class="veiculo-card w-full bg-marca-700 text-white rounded-2xl p-4 flex items-center gap-4 active:scale-[0.98] transition-all" data-preco="10">
+              <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center shrink-0">
+                <svg class="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z"/></svg>
+              </div>
+              <div class="flex-1 text-left">
+                <p class="text-sm font-bold">Econômico</p>
+                <p class="text-xs text-white/70">4 lugares · 3 min de chegada</p>
+              </div>
+              <div class="text-right">
+                <p class="text-lg font-bold">R$ 10</p>
+                <p class="text-[10px] text-white/60">mínimo</p>
+              </div>
+              <div class="ml-2 w-5 h-5 bg-white rounded-full flex items-center justify-center">
+                <svg class="w-3 h-3 text-marca-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
+              </div>
+            </button>
+            <!-- Conforto -->
+            <button onclick="home_passageiro_selecionarVeiculo(1)" class="veiculo-card w-full bg-white border-2 border-gray-200 rounded-2xl p-4 flex items-center gap-4 hover:border-marca-300 active:scale-[0.98] transition-all" data-preco="25">
+              <div class="w-12 h-12 bg-marca-100 rounded-xl flex items-center justify-center shrink-0">
+                <svg class="w-7 h-7 text-marca-700" fill="currentColor" viewBox="0 0 24 24"><path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z"/></svg>
+              </div>
+              <div class="flex-1 text-left">
+                <p class="text-sm font-bold text-marca-900">Conforto</p>
+                <p class="text-xs text-gray-500">4 lugares · 6 min de chegada</p>
+              </div>
+              <div class="text-right">
+                <p class="text-lg font-bold text-marca-900">R$ 25</p>
+                <p class="text-[10px] text-gray-400">estimativa</p>
+              </div>
+            </button>
+            <!-- Premium -->
+            <button onclick="home_passageiro_selecionarVeiculo(2)" class="veiculo-card w-full bg-white border-2 border-gray-200 rounded-2xl p-4 flex items-center gap-4 hover:border-marca-300 active:scale-[0.98] transition-all" data-preco="40">
+              <div class="w-12 h-12 bg-amber-100 rounded-xl flex items-center justify-center shrink-0">
+                <svg class="w-7 h-7 text-amber-600" fill="currentColor" viewBox="0 0 24 24"><path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z"/></svg>
+              </div>
+              <div class="flex-1 text-left">
+                <div class="flex items-center gap-1.5">
+                  <p class="text-sm font-bold text-marca-900">Premium</p>
+                  <span class="bg-amber-100 text-amber-800 text-[10px] font-bold px-1.5 py-0.5 rounded-full uppercase">VIP</span>
+                </div>
+                <p class="text-xs text-gray-500">4 lugares · carro executivo · 8 min</p>
+              </div>
+              <div class="text-right">
+                <p class="text-lg font-bold text-marca-900">R$ 40</p>
+                <p class="text-[10px] text-gray-400">estimativa</p>
+              </div>
+            </button>
+          </div>
+        </div>
+
+        <!-- Card de promoção -->
+        <div class="px-5 mt-5">
+          <div class="bg-gradient-to-r from-marca-800 to-marca-700 rounded-2xl p-4 text-white">
+            <div class="flex items-center justify-between">
+              <div>
+                <p class="text-xs text-marca-200 mb-0.5">Código promocional</p>
+                <p class="text-lg font-display font-bold tracking-wider">BLUE15</p>
+              </div>
+              <button onclick="home_passageiro_usarCupom()" class="bg-white text-marca-800 text-xs font-bold px-4 py-2 rounded-xl hover:bg-marca-50 active:scale-95 transition-all">USAR</button>
+            </div>
+            <p class="text-[10px] text-marca-300 mt-2">15% de desconto na primeira corrida. Válido até 31/03/2025.</p>
+          </div>
+        </div>
+
+        <!-- Histórico rápido -->
+        <div class="px-5 mt-5 mb-6">
+          <div class="flex items-center justify-between mb-3">
+            <h3 class="text-sm font-display font-bold text-marca-900">Corridas recentes</h3>
+            <button onclick="home_passageiro_abrirHistorico()" class="text-xs text-marca-700 font-medium hover:underline">Ver todas</button>
+          </div>
+          <div class="space-y-2.5">
+            <button onclick="mostrarTela('tarifa-e-rota')" class="w-full bg-gray-50 rounded-xl p-3.5 flex items-center gap-3 hover:bg-gray-100 active:scale-[0.98] transition-all text-left">
+              <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center shrink-0">
+                <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.5 12.75l6 6 9-13.5"/></svg>
+              </div>
+              <div class="flex-1 min-w-0">
+                <p class="text-sm font-medium text-marca-900 truncate">Casa → Trabalho</p>
+                <p class="text-xs text-gray-500">12,3 km · 18 min · R$ 34,50</p>
+              </div>
+              <div class="text-right shrink-0">
+                <p class="text-xs text-gray-400">14/01</p>
+              </div>
+            </button>
+            <button onclick="mostrarTela('tarifa-e-rota')" class="w-full bg-gray-50 rounded-xl p-3.5 flex items-center gap-3 hover:bg-gray-100 active:scale-[0.98] transition-all text-left">
+              <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center shrink-0">
+                <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.5 12.75l6 6 9-13.5"/></svg>
+              </div>
+              <div class="flex-1 min-w-0">
+                <p class="text-sm font-medium text-marca-900 truncate">Trabalho → Shopping</p>
+                <p class="text-xs text-gray-500">8,7 km · 14 min · R$ 25,90</p>
+              </div>
+              <div class="text-right shrink-0">
+                <p class="text-xs text-gray-400">12/01</p>
+              </div>
+            </button>
+            <button onclick="mostrarTela('tarifa-e-rota')" class="w-full bg-gray-50 rounded-xl p-3.5 flex items-center gap-3 hover:bg-gray-100 active:scale-[0.98] transition-all text-left">
+              <div class="w-10 h-10 bg-yellow-100 rounded-full flex items-center justify-center shrink-0">
+                <svg class="w-5 h-5 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"/></svg>
+              </div>
+              <div class="flex-1 min-w-0">
+                <p class="text-sm font-medium text-marca-900 truncate">Casa → Aeroporto</p>
+                <p class="text-xs text-gray-500">28,4 km · 42 min · R$ 10,00</p>
+              </div>
+              <div class="text-right shrink-0">
+                <p class="text-xs text-gray-400">08/01</p>
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal de busca de destino -->
+      <div id="modal-busca-destino" class="fixed inset-0 z-50 hidden">
+        <div class="absolute inset-0 bg-black/40" onclick="home_passageiro_fecharBusca()"></div>
+        <div class="absolute bottom-0 left-0 right-0 bg-white rounded-t-3xl max-h-[75%] flex flex-col">
+          <div class="flex items-center justify-center pt-3 pb-2">
+            <div class="w-10 h-1 bg-gray-300 rounded-full"></div>
+          </div>
+          <div class="px-5 pb-4 border-b border-gray-100">
+            <h3 class="text-base font-display font-bold text-marca-900 mb-3">Para onde você quer ir?</h3>
+            <div class="relative">
+              <svg class="w-5 h-5 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+              <input id="input-busca-destino" type="text" placeholder="Digite endereço ou ponto de referência..." class="w-full bg-gray-100 rounded-xl py-3 pl-10 pr-4 text-sm text-marca-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-marca-500" oninput="home_passageiro_buscarEnderecos(this.value)">
+            </div>
+          </div>
+          <div id="resultados-busca" class="flex-1 overflow-y-auto px-5 py-3 space-y-2">
+            <p class="text-xs text-gray-400 text-center py-8">Digite um endereço para buscar</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal: Promoções -->
+      <div id="modal-promocoes" class="fixed inset-0 z-50 hidden">
+        <div class="absolute inset-0 bg-black/40" onclick="home_passageiro_fecharPromocoes()"></div>
+        <div class="absolute bottom-0 left-0 right-0 bg-white rounded-t-3xl max-h-[80%] flex flex-col">
+          <div class="flex items-center justify-center pt-3 pb-2">
+            <div class="w-10 h-1 bg-gray-300 rounded-full"></div>
+          </div>
+          <div class="px-5 pb-2">
+            <h3 class="text-base font-display font-bold text-marca-900">Promoções ativas</h3>
+          </div>
+          <div class="flex-1 overflow-y-auto px-5 pb-6 space-y-3">
+            <div class="bg-gradient-to-r from-marca-800 to-marca-700 rounded-2xl p-4 text-white">
+              <p class="text-xs text-marca-200 mb-1">Cupom de boas-vindas</p>
+              <p class="text-2xl font-display font-bold">15% OFF</p>
+              <p class="text-xs text-marca-300 mt-1">Na primeira corrida</p>
+              <p class="text-[10px] text-marca-400 mt-2">Código: BLUE15 · Válido até 31/03/2025</p>
+            </div>
+            <div class="bg-amber-50 border border-amber-200 rounded-2xl p-4">
+              <p class="text-xs text-amber-700 mb-1">Indique e ganhe</p>
+              <p class="text-lg font-display font-bold text-amber-900">R$ 10,00 por amigo</p>
+              <p class="text-xs text-amber-700 mt-1">Para cada amigo que fizer a primeira corrida</p>
+              <button onclick="home_passageiro_compartilhar()" class="mt-3 bg-amber-500 text-white text-xs font-bold px-4 py-2 rounded-xl hover:bg-amber-600 active:scale-95 transition-all">COMPARTILHAR</button>
+            </div>
+            <div class="bg-green-50 border border-green-200 rounded-2xl p-4">
+              <p class="text-xs text-green-700 mb-1">Corridas semanais</p>
+              <p class="text-lg font-display font-bold text-green-900">5ª corrida grátis</p>
+              <p class="text-xs text-green-700 mt-1">Faça 4 corridas esta semana e a 5ª sai por R$ 0,00</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal: Perfil -->
+      <div id="modal-perfil" class="fixed inset-0 z-50 hidden">
+        <div class="absolute inset-0 bg-black/40" onclick="home_passageiro_fecharPerfil()"></div>
+        <div class="absolute bottom-0 left-0 right-0 bg-white rounded-t-3xl max-h-[85%] flex flex-col">
+          <div class="flex items-center justify-center pt-3 pb-2">
+            <div class="w-10 h-1 bg-gray-300 rounded-full"></div>
+          </div>
+          <div class="px-5 pb-2">
+            <h3 class="text-base font-display font-bold text-marca-900">Meu Perfil</h3>
+          </div>
+          <div class="flex-1 overflow-y-auto px-5 pb-6">
+            <div class="flex items-center gap-4 mb-6">
+              <div class="w-16 h-16 rounded-full bg-marca-700 flex items-center justify-center text-white font-display text-2xl font-bold">JM</div>
+              <div>
+                <p class="text-lg font-display font-bold text-marca-900">João Mendes</p>
+                <p class="text-sm text-gray-500">joao.mendes@email.com</p>
+                <p class="text-xs text-gray-400 mt-0.5">(11) 9 8765-4321</p>
+              </div>
+            </div>
+            <div class="space-y-3">
+              <div class="bg-gray-50 rounded-xl p-4 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                  <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 013 21V12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z"/></svg>
+                  <span class="text-sm font-medium text-marca-900">Avaliação</span>
+                </div>
+                <span class="text-sm font-bold text-marca-700">4.8 ⭐</span>
+              </div>
+              <div class="bg-gray-50 rounded-xl p-4 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                  <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16.5 18.75h-9m9 0a3 3 0 013 3h-15a3 3 0 01-3-3m9 0v-3.375c0-.621.503-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V18.75m-9 0h-2.25A2.25 2.25 0 003.75 16.5V6A2.25 2.25 0 016 3.75h12A2.25 2.25 0 0120.25 6v10.5a2.25 2.25 0 01-2.25 2.25h-2.25"/></svg>
+                  <span class="text-sm font-medium text-marca-900">Corridas realizadas</span>
+                </div>
+                <span class="text-sm font-bold text-marca-700">147</span>
+              </div>
+              <div class="bg-gray-50 rounded-xl p-4 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                  <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/></svg>
+                  <span class="text-sm font-medium text-marca-900">Endereço</span>
+                </div>
+                <span class="text-xs text-gray-500 text-right max-w-[180px]">Rua das Palmeiras, 42, Jardins, SP</span>
+              </div>
+              <button onclick="home_passageiro_sair()" class="w-full mt-4 bg-red-50 text-red-600 text-sm font-medium py-3 rounded-xl hover:bg-red-100 active:scale-[0.98] transition-all">Sair da conta</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal: Histórico -->
+      <div id="modal-historico" class="fixed inset-0 z-50 hidden">
+        <div class="absolute inset-0 bg-black/40" onclick="home_passageiro_fecharHistorico()"></div>
+        <div class="absolute bottom-0 left-0 right-0 bg-white rounded-t-3xl max-h-[85%] flex flex-col">
+          <div class="flex items-center justify-center pt-3 pb-2">
+            <div class="w-10 h-1 bg-gray-300 rounded-full"></div>
+          </div>
+          <div class="px-5 pb-2 flex items-center justify-between">
+            <h3 class="text-base font-display font-bold text-marca-900">Histórico de Corridas</h3>
+            <span class="text-xs text-gray-500">147 corridas no total</span>
+          </div>
+          <div class="flex-1 overflow-y-auto px-5 pb-6 space-y-3">
+            <div onclick="mostrarTela('tarifa-e-rota')" class="bg-gray-50 rounded-xl p-4 cursor-pointer hover:bg-gray-100 active:scale-[0.98] transition-all">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs text-gray-400">14 de janeiro, 2025</span>
+                <span class="badge badge-verde text-[10px]">Concluída</span>
+              </div>
+              <p class="text-sm font-medium text-marca-900">Casa → Trabalho</p>
+              <p class="text-xs text-gray-500">12,3 km · 18 min</p>
+              <div class="flex items-center justify-between mt-2 pt-2 border-t border-gray-200">
+                <span class="text-xs text-gray-400">Econômico · Carlos S.</span>
+                <span class="text-sm font-bold text-marca-900">R$ 34,50</span>
+              </div>
+            </div>
+            <div onclick="mostrarTela('tarifa-e-rota')" class="bg-gray-50 rounded-xl p-4 cursor-pointer hover:bg-gray-100 active:scale-[0.98] transition-all">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs text-gray-400">12 de janeiro, 2025</span>
+                <span class="badge badge-verde text-[10px]">Concluída</span>
+              </div>
+              <p class="text-sm font-medium text-marca-900">Trabalho → Shopping Iguatemi</p>
+              <p class="text-xs text-gray-500">8,7 km · 14 min</p>
+              <div class="flex items-center justify-between mt-2 pt-2 border-t border-gray-200">
+                <span class="text-xs text-gray-400">Conforto · Ana R.</span>
+                <span class="text-sm font-bold text-marca-900">R$ 25,90</span>
+              </div>
+            </div>
+            <div onclick="mostrarTela('tarifa-e-rota')" class="bg-gray-50 rounded-xl p-4 cursor-pointer hover:bg-gray-100 active:scale-[0.98] transition-all">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs text-gray-400">08 de janeiro, 2025</span>
+                <span class="badge badge-amarelo text-[10px]">Valor mínimo</span>
+              </div>
+              <p class="text-sm font-medium text-marca-900">Casa → Aeroporto GRU</p>
+              <p class="text-xs text-gray-500">28,4 km · 42 min · corrida longa</p>
+              <div class="flex items-center justify-between mt-2 pt-2 border-t border-gray-200">
+                <span class="text-xs text-gray-400">Premium · Roberto M.</span>
+                <span class="text-sm font-bold text-marca-900">R$ 10,00</span>
+              </div>
+            </div>
+            <div onclick="mostrarTela('tarifa-e-rota')" class="bg-gray-50 rounded-xl p-4 cursor-pointer hover:bg-gray-100 active:scale-[0.98] transition-all">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs text-gray-400">05 de janeiro, 2025</span>
+                <span class="badge badge-verde text-[10px]">Concluída</span>
+              </div>
+              <p class="text-sm font-medium text-marca-900">Academia → Casa</p>
+              <p class="text-xs text-gray-500">3,2 km · 12 min</p>
+              <div class="flex items-center justify-between mt-2 pt-2 border-t border-gray-200">
+                <span class="text-xs text-gray-400">Econômico · Pedro H.</span>
+                <span class="text-sm font-bold text-marca-900">R$ 10,00</span>
+              </div>
+            </div>
+            <div onclick="mostrarTela('tarifa-e-rota')" class="bg-gray-50 rounded-xl p-4 cursor-pointer hover:bg-gray-100 active:scale-[0.98] transition-all">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs text-gray-400">02 de janeiro, 2025</span>
+                <span class="badge badge-verde text-[10px]">Concluída</span>
+              </div>
+              <p class="text-sm font-medium text-marca-900">Trabalho → Casa</p>
+              <p class="text-xs text-gray-500">15,8 km · 22 min</p>
+              <div class="flex items-center justify-between mt-2 pt-2 border-t border-gray-200">
+                <span class="text-xs text-gray-400">Conforto · Lucas F.</span>
+                <span class="text-sm font-bold text-marca-900">R$ 39,50</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <script>
+        let home_passageiro_veiculoSelecionado = 0;
+        let home_passageiro_destinoDefinido = false;
+
+        function home_passageiro_abrirMenu() {
+          document.getElementById('overlay-menu').classList.remove('hidden');
+          document.getElementById('sidebar-menu').classList.remove('-translate-x-full');
+        }
+
+        function home_passageiro_fecharMenu() {
+          document.getElementById('overlay-menu').classList.add('hidden');
+          document.getElementById('sidebar-menu').classList.add('-translate-x-full');
+        }
+
+        function home_passageiro_buscarDestino() {
+          document.getElementById('modal-busca-destino').classList.remove('hidden');
+          setTimeout(function() {
+            document.getElementById('input-busca-destino').focus();
+          }, 100);
+        }
+
+        function home_passageiro_fecharBusca() {
+          document.getElementById('modal-busca-destino').classList.add('hidden');
+          document.getElementById('input-busca-destino').value = '';
+        }
+
+        var enderecosSugeridos = [
+          { nome: 'Av. Paulista, 1578 — Bela Vista, São Paulo', ref: 'Trabalho' },
+          { nome: 'Rua Augusta, 500 — Consolação, São Paulo', ref: 'Academia' },
+          { nome: 'Shopping Iguatemi — Vila Nova Conceição, SP', ref: 'Shopping' },
+          { nome: 'Av. Brigadeiro Faria Lima, 2232 — Pinheiros, SP', ref: 'Ponto comercial' },
+          { nome: 'Rua das Palmeiras, 42 — Jardins, São Paulo', ref: 'Casa' },
+          { nome: 'Aeroporto de Guarulhos — GRU, Terminal 1', ref: 'Aeroporto' },
+          { nome: 'Estação da Luz — Luz, São Paulo', ref: 'Metrô' },
+          { nome: 'Hospital Sírio-Libanês — Bela Vista, SP', ref: 'Hospital' }
+        ];
+
+        function home_passageiro_buscarEnderecos(termo) {
+          var container = document.getElementById('resultados-busca');
+          if (!termo || termo.length < 2) {
+            container.innerHTML = '<p class="text-xs text-gray-400 text-center py-8">Digite pelo menos 2 caracteres</p>';
+            return;
+          }
+          var resultados = enderecosSugeridos.filter(function(e) {
+            return e.nome.toLowerCase().indexOf(termo.toLowerCase()) !== -1;
+          });
+          if (resultados.length === 0) {
+            container.innerHTML = '<p class="text-xs text-gray-400 text-center py-8">Nenhum endereço encontrado</p>';
+            return;
+          }
+          var html = '';
+          resultados.forEach(function(r) {
+            html += '<button onclick="home_passageiro_selecionarEndereco(\'' + r.nome + '\')" class="w-full text-left bg-gray-50 rounded-xl p-3.5 flex items-start gap-3 hover:bg-marca-50 active:scale-[0.98] transition-all">' +
+              '<svg class="w-5 h-5 text-marca-400 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/></svg>' +
+              '<div><p class="text-sm font-medium text-marca-900">' + r.nome + '</p><p class="text-xs text-gray-400 mt-0.5">' + r.ref + '</p></div></button>';
+          });
+          container.innerHTML = html;
+        }
+
+        function home_passageiro_selecionarEndereco(endereco) {
+          document.getElementById('destino-texto').textContent = endereco;
+          home_passageiro_destinoDefinido = true;
+          home_passageiro_fecharBusca();
+          toast('Destino definido! Escolha um veículo.', 'ok');
+        }
+
+        function home_passageiro_irPara(nome, endereco) {
+          document.getElementById('destino-texto').textContent = endereco;
+          home_passageiro_destinoDefinido = true;
+          toast('Destino: ' + nome, 'ok');
+        }
+
+        function home_passageiro_selecionarVeiculo(index) {
+          home_passageiro_veiculoSelecionado = index;
+          var cards = document.querySelectorAll('.veiculo-card');
+          var precos = [10, 25, 40];
+          var nomes = ['Econômico', 'Conforto', 'Premium'];
+          cards.forEach(function(card, i) {
+            if (i === index) {
+              card.className = 'veiculo-card w-full bg-marca-700 text-white rounded-2xl p-4 flex items-center gap-4 active:scale-[0.98] transition-all';
+            } else {
+              card.className = 'veiculo-card w-full bg-white border-2 border-gray-200 rounded-2xl p-4 flex items-center gap-4 hover:border-marca-300 active:scale-[0.98] transition-all';
+            }
+          });
+          if (home_passageiro_destinoDefinido) {
+            toast(nomes[index] + ' selecionado — R$ ' + precos[index].toFixed(2).replace('.', ','), 'ok');
+          }
+        }
+
+        function home_passageiro_solicitarCorrida() {
+          if (!home_passageiro_destinoDefinido) {
+            toast('Defina um destino antes de solicitar a corrida.', 'erro');
+            return;
+          }
+          mostrarTela('solicitacao-corrida');
+        }
+
+        function home_passageiro_centralizar() {
+          toast('Localização atualizada.', 'ok');
+        }
+
+        function home_passageiro_sair() {
+          home_passageiro_fecharMenu();
+          home_passageiro_fecharPerfil();
+          toast('Você saiu da sua conta.', 'info');
+        }
+
+        function home_passageiro_abrirPerfil() {
+          home_passageiro_fecharMenu();
+          document.getElementById('modal-perfil').classList.remove('hidden');
+        }
+        function home_passageiro_fecharPerfil() {
+          document.getElementById('modal-perfil').classList.add('hidden');
+        }
+
+        function home_passageiro_abrirHistorico() {
+          home_passageiro_fecharMenu();
+          document.getElementById('modal-historico').classList.remove('hidden');
+        }
+        function home_passageiro_fecharHistorico() {
+          document.getElementById('modal-historico').classList.add('hidden');
+        }
+
+        function home_passageiro_abrirPromocoes() {
+          home_passageiro_fecharMenu();
+          document.getElementById('modal-promocoes').classList.remove('hidden');
+        }
+        function home_passageiro_fecharPromocoes() {
+          document.getElementById('modal-promocoes').classList.add('hidden');
+        }
+
+        function home_passageiro_usarCupom() {
+          home_passageiro_fecharPromocoes();
+          toast('Cupom BLUE15 aplicado! 15% de desconto.', 'ok');
+        }
+
+        function home_passageiro_compartilhar() {
+          toast('Link de convite copiado!', 'ok');
+        }
+      </script>
+    </section>
+
+    <!-- TELAS -->
 
     </main>
 
